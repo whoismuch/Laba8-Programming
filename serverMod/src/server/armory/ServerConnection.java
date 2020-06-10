@@ -45,7 +45,7 @@ public class ServerConnection implements Runnable {
 
             command = (CommandDescription) request;
 
-            System.out.println(command.getChoice() + " " + command.getUsername() + " " + command.getPassword());
+            System.out.println(command.getChoice( ) + " " + command.getUsername( ) + " " + command.getPassword( ));
 
             everythingIsAlright = true;
 
@@ -73,18 +73,18 @@ public class ServerConnection implements Runnable {
         } catch (InterruptedException | ExecutionException ex) {
             ex.printStackTrace( );
         } catch (NullPointerException ex) {
-            System.out.println("Мы дико извиняемся, но у нас неполадочки со связью" );
+            System.out.println("Мы дико извиняемся, но у нас неполадочки со связью");
             sendToClient.setMessage("Упс...у сервера маленькие неполадОчки");
             d = executorService.submit(sendToClient);
             try {
-                d.get();
+                d.get( );
             } catch (InterruptedException e) {
                 e.printStackTrace( );
             } catch (ExecutionException e) {
                 e.printStackTrace( );
             }
             try {
-                incoming.close();
+                incoming.close( );
             } catch (IOException e) {
                 e.printStackTrace( );
             }

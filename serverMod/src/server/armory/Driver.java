@@ -31,8 +31,8 @@ public class Driver {
     private HashMap<String, String> available = new HashMap<>( );
     private ReadWriteLock lock;
 
-    public Driver () {
-        this.dequeHashMap = new HashMap<>();
+    public Driver ( ) {
+        this.dequeHashMap = new HashMap<>( );
         registerCommand(new AddCommand( ));
         registerCommand(new ClearCommand( ));
         registerCommand(new ExecuteScriptCommand( ));
@@ -48,7 +48,7 @@ public class Driver {
         registerCommand(new ShowCommand( ));
         registerCommand(new SumOfDistanceCommand( ));
         registerCommand(new UpdateIdCommand( ));
-        lock = new ReentrantReadWriteLock();
+        lock = new ReentrantReadWriteLock( );
     }
 
 
@@ -71,7 +71,7 @@ public class Driver {
      * @throws NoExecuteScriptInScript ошибка возникает, если в скрипте будет команда вызова скрипта
      */
     public String execute (ICollectionManager icm, String line, String arg, Route route, Driver driver, String username) throws NoExecuteScriptInScript {
-        lock.writeLock().lock();
+        lock.writeLock( ).lock( );
         try {
             if (!dequeHashMap.containsKey(username)) dequeHashMap.put(username, new ArrayDeque<>( ));
             Command command = man.get(line);
@@ -83,7 +83,7 @@ public class Driver {
                 return result;
             }
         } finally {
-            lock.writeLock().unlock();
+            lock.writeLock( ).unlock( );
         }
     }
 

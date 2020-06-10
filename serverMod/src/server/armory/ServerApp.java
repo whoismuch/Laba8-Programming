@@ -38,8 +38,8 @@ public class ServerApp {
             ExecutorService executorService = Executors.newFixedThreadPool(8);
 
             Runtime.getRuntime( ).addShutdownHook(new Thread(( ) -> {
-                executor.shutdown();
-                executorService.shutdown();
+                executor.shutdown( );
+                executorService.shutdown( );
                 db.theEnd( );
             }));
 
@@ -58,7 +58,6 @@ public class ServerApp {
 
                     GetFromClient getFromClient = new GetFromClient(incoming, db, navigator, routeBook, driver, executorService, sendToClient);
                     executor.submit(getFromClient);
-
 
 
                 } catch (UnknownHostException | NumberFormatException ex) {

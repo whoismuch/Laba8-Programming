@@ -31,13 +31,13 @@ public class GetFromClient implements Runnable {
         this.driver = driver;
     }
 
-    public void run () {
+    public void run ( ) {
         try {
-            ObjectInputStream get = new ObjectInputStream(incoming.getInputStream());
-            obj = get.readObject();
+            ObjectInputStream get = new ObjectInputStream(incoming.getInputStream( ));
+            obj = get.readObject( );
 
-            Thread childTread = new Thread( new ServerConnection(obj, incoming, db, routeBook, navigator, driver, executorService, sendToClient));
-            childTread.start();
+            Thread childTread = new Thread(new ServerConnection(obj, incoming, db, routeBook, navigator, driver, executorService, sendToClient));
+            childTread.start( );
         } catch (EOFException e) {
             System.out.println("Клиент решил внезапно покинуть нас");
         } catch (IOException e) {

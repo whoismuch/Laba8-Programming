@@ -27,15 +27,13 @@ public class DataExchangeWithServer {
             iAmIn = sendCycle(byteBuffer);
         }
 
-
-
-        byteBuffer.clear();
+        byteBuffer.clear( );
         baos.flush( );
-        oos.flush();
+        oos.flush( );
 
     }
 
-    public boolean sendCycle(ByteBuffer byteBuffer) throws IOException {
+    public boolean sendCycle (ByteBuffer byteBuffer) throws IOException {
         boolean in = false;
         while ((outcomingchannel.write(byteBuffer)) > 0) {
             in = true;
@@ -55,12 +53,12 @@ public class DataExchangeWithServer {
             }
             ByteArrayInputStream bios = new ByteArrayInputStream(baos.toByteArray( ));
             ObjectInputStream ois = new ObjectInputStream(bios);
-            Object o = ois.readObject();
+            Object o = ois.readObject( );
 
-            baos.flush();
-            byteBuffer.clear();
-            bios.close();
-            ois.close();
+            baos.flush( );
+            byteBuffer.clear( );
+            bios.close( );
+            ois.close( );
             return o;
         } catch (ClassNotFoundException e) {
             e.printStackTrace( );
