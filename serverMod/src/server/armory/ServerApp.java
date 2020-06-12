@@ -17,7 +17,7 @@ public class ServerApp {
 
     public static void main (String[] args) {
         try {
-            args = new String[]{"1376", "5432", "s285611", "mju882"};
+            args = new String[]{"1375", "5432", "s285611", "mju882"};
             int port = Integer.parseInt(args[0]);
             SocketAddress address = new InetSocketAddress(port);
 

@@ -102,6 +102,7 @@ public class Route implements Comparable<Route>, Serializable {
     @Override
     public String toString ( ) {
         return "Route{" +
+                "username=" + username +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", coordinates=" + coordinates +
@@ -198,4 +199,27 @@ public class Route implements Comparable<Route>, Serializable {
         return creationDate;
     }
 
+    public void setName (String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates (Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setCreationDate (ZonedDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setFrom (Location from) {
+        this.from = from;
+    }
+
+    public void setTo (Location to) {
+        this.to = to;
+    }
+
+    public void setDistance (Float distance) {
+        this.distance = distance;
+    }
 }

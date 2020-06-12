@@ -1,27 +1,25 @@
 package client.controllers;
 
 import client.ClientApp;
+import client.models.ClientProviding;
 import client.models.ConnectionModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import javafx.event.ActionEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class ConnectionController {
 
-    ConnectionModel connectionModel = new ConnectionModel( );
-    ClientApp clientApp = new ClientApp();
+
+    private ClientProviding clientProviding;
+    private ClientApp clientApp;
+    private ConnectionModel connectionModel;
 
     @FXML
     private TextField tf1;
@@ -65,5 +63,15 @@ public class ConnectionController {
         }).start();
 
     }
+
+
+    public void setEverything (ClientProviding clientProviding, ClientApp clientApp) {
+
+        this.clientProviding = clientProviding;
+        this.clientApp = clientApp;
+        connectionModel = new ConnectionModel(clientProviding);
+    }
+
+
 
 }

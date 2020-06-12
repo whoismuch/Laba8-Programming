@@ -45,11 +45,14 @@ public class ServerConnection implements Runnable {
 
             command = (CommandDescription) request;
 
-            System.out.println(command.getChoice( ) + " " + command.getUsername( ) + " " + command.getPassword( ));
-
             everythingIsAlright = true;
 
             checkPassword( );
+
+            sendToClient.setMessage(routeBook.getCollection());
+            c = executorService.submit(sendToClient);
+
+            c.get();
 
             if (command.getName( ) == null) {
                 sendToClient.setMessage(authenticationResult);

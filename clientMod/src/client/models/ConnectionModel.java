@@ -5,12 +5,19 @@ import java.nio.channels.UnresolvedAddressException;
 
 public class ConnectionModel {
 
+    private ClientProviding clientProviding;
+
+    public ConnectionModel (ClientProviding clientProviding) {
+        this.clientProviding = clientProviding;
+    }
+
     public String connect(String address, String port) {
         try {
             if (address.contains(" ")) return "Ууууу, в адресе не должно быть пробелов";
             if (port.contains(" ")) return "Порт с пробелами, серьезно? Зачем?";
-            ClientProviding provide = new ClientProviding(address, port);
-            provide.clientWork( );
+           clientProviding.setAddress(address);
+           clientProviding.setPort(port);
+           clientProviding.clientWork();
         } catch (UnresolvedAddressException ex) {
             return "Такого адреса, к сожалению, не существует";
         } catch (NumberFormatException ex) {

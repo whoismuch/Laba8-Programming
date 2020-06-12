@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<TabPane prefHeight="525.0" prefWidth="871.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MainWindowCollectionController">
+  <tabs>
+    <Tab text="Коллекция">
+      <content>
+            <VBox prefHeight="442.0" prefWidth="779.0">
+               <children>
+                  <HBox prefWidth="776.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="108.0" text="Пользователь: ">
+                           <HBox.margin>
+                              <Insets left="490.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label contentDisplay="RIGHT" prefHeight="25.0" prefWidth="185.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets right="32.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="291.0" prefWidth="810.0">
+                     <children>
+                        <TableView fx:id="table" prefHeight="291.0" prefWidth="827.0">
+                          <columns>
+                            <TableColumn fx:id="id" prefWidth="30.0" text="id" />
+                              <TableColumn fx:id="owner" prefWidth="70.0" text="Владелец" />
+                              <TableColumn fx:id="name" prefWidth="66.0" text="Название маршрута" />
+                            <TableColumn fx:id="coordinateX" prefWidth="48.0" text="Now X" />
+                              <TableColumn fx:id="coordinateY" prefWidth="54.0" text="Now Y" />
+                              <TableColumn fx:id="creationDate" prefWidth="79.0" text="Дата Создания" />
+                              <TableColumn fx:id="fromName" prefWidth="79.0" text="From Name" />
+                              <TableColumn fx:id="fromX" prefWidth="59.0" text="From X" />
+                              <TableColumn fx:id="fromY" prefWidth="57.0" text="From Y" />
+                              <TableColumn fx:id="toName" prefWidth="59.0" text="To Name" />
+                              <TableColumn fx:id="toX" prefWidth="63.0" text="To X" />
+                              <TableColumn fx:id="toY" prefWidth="59.0" text="To Y" />
+                              <TableColumn fx:id="distance" prefWidth="66.0" text="Дальность" />
+                          </columns>
+                        </TableView>
+                        <ScrollBar orientation="VERTICAL">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </ScrollBar>
+                     </children>
+                  </HBox>
+                  <ButtonBar prefHeight="59.0" prefWidth="796.0">
+                     <VBox.margin>
+                        <Insets right="20.0" top="8.0" />
+                     </VBox.margin>
+                     <buttons>
+                        <Button fx:id="info" mnemonicParsing="false" onAction="#onActionInfo" prefHeight="54.0" prefWidth="237.0" text="Информация о коллекции" textAlignment="CENTER" />
+                        <Button fx:id="help" mnemonicParsing="false" prefHeight="53.0" prefWidth="191.0" text="Помощь" textAlignment="CENTER">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <Button fx:id="sum_of_distance" mnemonicParsing="false" prefHeight="53.0" prefWidth="191.0" text="Сумма дальностей маршрутов" textAlignment="CENTER" />
+                        <Button fx:id="history" mnemonicParsing="false" prefHeight="53.0" text="История введенных команд" textAlignment="CENTER" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ButtonBar>
+                  <ButtonBar layoutX="50.0" layoutY="359.0" prefHeight="61.0" prefWidth="796.0">
+                     <buttons>
+                        <Button fx:id="add" mnemonicParsing="false" prefHeight="55.0" prefWidth="191.0" text="Добавить маршрут" textAlignment="CENTER">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <Button fx:id="execute_script" mnemonicParsing="false" prefHeight="56.0" prefWidth="191.0" text="Выполнить скрипт" textAlignment="CENTER" />
+                        <Button fx:id="clear" mnemonicParsing="false" prefHeight="55.0" text="Очистить коллекцию" textAlignment="CENTER" />
+                        <Button fx:id="filter_less_than_distance" mnemonicParsing="false" prefHeight="56.0" prefWidth="237.0" text="Отфильтровать по дальности, меньше заданной" textAlignment="CENTER" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets right="20.0" top="5.0" />
+                     </VBox.margin>
+                  </ButtonBar>
+                  <ButtonBar layoutX="50.0" layoutY="349.0" prefHeight="60.0" prefWidth="796.0">
+                     <buttons>
+                        <Button fx:id="print_ascending" mnemonicParsing="false" prefHeight="59.0" prefWidth="237.0" text="Вывести коллекцию в порядке возрастания" textAlignment="CENTER" />
+                        <Button fx:id="remove_greater" mnemonicParsing="false" prefHeight="60.0" prefWidth="191.0" text="Удалить объекты, большие заданного" textAlignment="CENTER">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <Button fx:id="remove_lower" mnemonicParsing="false" prefHeight="59.0" prefWidth="191.0" text="Удалить объекты, меньшие заданного" textAlignment="CENTER" />
+                        <Button fx:id="blup" mnemonicParsing="false" prefHeight="59.0" text="Можете пожамкать и снять стресс" textAlignment="CENTER" />
+                     </buttons>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="5.0" right="20.0" top="5.0" />
+                     </VBox.margin>
+                  </ButtonBar>
+               </children>
+               <padding>
+                  <Insets left="40.0" right="15.0" top="3.0" />
+               </padding>
+            </VBox>
+      </content>
+    </Tab>
+    <Tab text="Графика">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

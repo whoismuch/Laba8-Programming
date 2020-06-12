@@ -30,6 +30,8 @@ public class DataExchangeWithServer {
         byteBuffer.clear( );
         baos.flush( );
         oos.flush( );
+        oos.close();
+        baos.close();
 
     }
 
@@ -45,7 +47,7 @@ public class DataExchangeWithServer {
     public Object getFromServer ( ) throws IOException {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream( );
-            ByteBuffer byteBuffer = ByteBuffer.allocate(500);
+            ByteBuffer byteBuffer = ByteBuffer.allocate(5000);
             int n = 0;
             while ((n = outcomingchannel.read(byteBuffer)) > 0) {
                 byteBuffer.flip( );
@@ -54,17 +56,13 @@ public class DataExchangeWithServer {
             ByteArrayInputStream bios = new ByteArrayInputStream(baos.toByteArray( ));
             ObjectInputStream ois = new ObjectInputStream(bios);
             Object o = ois.readObject( );
-
-            baos.flush( );
-            byteBuffer.clear( );
-            bios.close( );
-            ois.close( );
             return o;
         } catch (ClassNotFoundException e) {
             e.printStackTrace( );
             return null;
         } catch (EOFException e) {
-            throw new IOException( );
+            e.printStackTrace( );
+            return null;
         }
     }
 }

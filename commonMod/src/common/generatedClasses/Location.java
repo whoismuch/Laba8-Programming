@@ -86,4 +86,16 @@ public class Location implements Serializable {
     public int hashCode() {
         return Objects.hash(getName());
     }
+
+    public void setX (long x) {
+        this.x = x;
+    }
+
+    public void setY (Long y) {
+        this.y = y;
+    }
+
+    public void setName (String name) {
+        this.name = name;
+    }
 }

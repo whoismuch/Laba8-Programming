@@ -40,15 +40,26 @@ public class Coordinates implements Serializable {
      * Метод получения значения поля (@link Coordinates#x)
      * @return x текущую координату x
      */
-    public Long getX() {
-        return this.x;
-    }
+
 
     /**
      * Метод получения значения поля (@link Coordinates#y)
      * @return y текущую координату y
      */
-    public int getY() {
-        return this.y;
+
+    public Long getX ( ) {
+        return x;
+    }
+
+    public void setX (Long x) {
+        this.x = x;
+    }
+
+    public int getY ( ) {
+        return y;
+    }
+
+    public void setY (int y) {
+        this.y = y;
     }
 }
