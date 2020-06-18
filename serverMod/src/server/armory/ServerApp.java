@@ -49,10 +49,10 @@ public class ServerApp {
                 Socket incoming = ss.accept( ).socket( );
                 Socket listener = ss.accept( ).socket( );
 
+                System.out.println(incoming + " подключился к серверу.");
+
                 clients.add(listener);
                 notifyClients(routeBook.getRoutes( ));
-
-                System.out.println(incoming + " подключился к серверу.");
 
                 SendToClient sendToClient = new SendToClient(incoming);
 
@@ -89,7 +89,7 @@ public class ServerApp {
                 baos.flush( );
                 send.close( );
             } catch (IOException ex) {
-//                it.remove( );
+                ex.printStackTrace();
             }
         }
     }

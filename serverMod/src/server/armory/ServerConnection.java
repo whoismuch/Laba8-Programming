@@ -40,6 +40,7 @@ public class ServerConnection implements Runnable {
         this.executorService = executorService;
         this.sendToClient = sendToClient;
         this.clients = clients;
+        this.listener = listener;
 
     }
 
@@ -72,6 +73,7 @@ public class ServerConnection implements Runnable {
 
             try {
                 incoming.close( );
+                clients.remove(listener);
             } catch (IOException e) {
                 e.printStackTrace( );
             }
@@ -107,7 +109,6 @@ public class ServerConnection implements Runnable {
 
             String result = driver.execute(navigator, command.getName( ), command.getArg( ), command.getRoute( ), driver, command.getUsername( ));
 
-            System.out.println(result);
             sendToClient.setMessage(result);
             c = executorService.submit(sendToClient);
 

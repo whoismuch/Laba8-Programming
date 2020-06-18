@@ -31,6 +31,10 @@ public class ClientNotifying implements Runnable {
     }
 
 
+    public void setMainWindowCollectionController (MainWindowCollectionController mainWindowCollectionController) {
+        this.mainWindowCollectionController = mainWindowCollectionController;
+    }
+
     @Override
     public void run ( ) {
         try {
@@ -38,17 +42,16 @@ public class ClientNotifying implements Runnable {
             notifyingChannel.configureBlocking(false);
             notifyingChannel.register(selector, SelectionKey.OP_READ);
             while (true) {
-//                System.out.println(1);
                 selector.select( );
                 Object object = dataExchangeWithServer.getFromServer( );
                 LinkedHashSet<Route> routes = (LinkedHashSet<Route>) object;
-//                System.out.println(routes);
                 clientProviding.setRoutes(routes);
 
-                mainWindowCollectionController.setColumns(routes);
+
+                if (mainWindowCollectionController!= null) mainWindowCollectionController.setColumns(routes);
             }
         } catch (ClosedChannelException ex) {
-            System.out.println("gg");
+            ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace( );
         }

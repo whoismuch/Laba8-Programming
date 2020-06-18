@@ -42,6 +42,8 @@ public class ClientProviding {
     private LinkedHashSet<Route> routes;
     private MainWindowCollectionController mainController;
     private ExecutorService executorService;
+    private int a;
+    private ClientNotifying clientNotifying;
 
     public void setMainController (MainWindowCollectionController mainController) {
         this.mainController = mainController;
@@ -52,10 +54,15 @@ public class ClientProviding {
         userManager = new UserManager(scanner,
                 new BufferedWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8)),
                 true);
+        a = 0;
     }
 
     public void setRoutes (LinkedHashSet<Route> routes) {
         this.routes = routes;
+    }
+
+    public ClientNotifying getClientNotifying ( ) {
+        return clientNotifying;
     }
 
     /**
@@ -70,15 +77,21 @@ public class ClientProviding {
             outcomingchannel.connect(outcoming);
             notifyingChannel.connect(outcoming);
 
+
             this.outcomingchannel = outcomingchannel;
             this.outcoming = outcoming;
 
             dataExchangeWithServer = new DataExchangeWithServer(outcomingchannel);
             DataExchangeWithServer notifyFromServer = new DataExchangeWithServer(notifyingChannel);
 
-            ClientNotifying clientNotifying = new ClientNotifying(notifyingChannel, notifyFromServer, mainController, this);
-            executorService = Executors.newSingleThreadExecutor( );
-            executorService.submit(clientNotifying);
+            if (a == 0) {
+                clientNotifying = new ClientNotifying(notifyingChannel, notifyFromServer, mainController, this);
+                new Thread(clientNotifying).start();
+                a = 1;
+            }
+//            ClientNotifying clientNotifying = new ClientNotifying(notifyingChannel, notifyFromServer, mainController, this);
+//            executorService = Executors.newSingleThreadExecutor( );
+//            executorService.submit(clientNotifying);
 
             selector = Selector.open( );
             outcomingchannel.configureBlocking(false);
@@ -88,7 +101,6 @@ public class ClientProviding {
             userManager.setAvailable((HashMap) dataExchangeWithServer.getFromServer( ));
 
         } catch (IOException ex) {
-            System.out.println(173);
 //            executorService.shutdown( );
             clientWork( );
         } catch (NullPointerException ex) {

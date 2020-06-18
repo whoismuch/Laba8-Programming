@@ -307,6 +307,7 @@ public class MainWindowCollectionController {
         this.clientApp = clientApp;
         mainWindowCollectionModel = new MainWindowCollectionModel(clientProviding);
         alreadyOpened = false;
+        clientProviding.getClientNotifying().setMainWindowCollectionController(this);
 
         setColumns(clientProviding.getRoutes());
         clientProviding.clientWork();
@@ -320,6 +321,7 @@ public class MainWindowCollectionController {
             }
             table.setItems(list);
         } catch (IllegalStateException ex) {
+            ex.printStackTrace();
         }
 
     }
