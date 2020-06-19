@@ -40,7 +40,7 @@ public class MainWindowCollectionModel {
         return clientProviding.sendCommand("clear").toString();
     }
 
-    public void addCommand (Route route) throws IOException {
+    public void addCommand () throws IOException {
         clientProviding.clientWork();
         clientProviding.sendCommand("add");
     }
@@ -59,6 +59,16 @@ public class MainWindowCollectionModel {
         List<Route> list = new ArrayList<>();
         if (o.getClass().equals("".getClass())) return list;
         else return (List<Route>) o;
+    }
+
+    public void removeLowerCommand() {
+        clientProviding.clientWork();
+        clientProviding.sendCommand("remove_lower");
+    }
+
+    public void removeGreaterCommand() {
+        clientProviding.clientWork();
+        clientProviding.sendCommand("remove_greater");
     }
 
 }

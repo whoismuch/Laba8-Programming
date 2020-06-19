@@ -36,16 +36,6 @@ public class MainWindowCollectionController {
     private EnterRouteController enterRouteController;
     private EnterDistanceController enterDistanceController;
 
-    private javafx.event.EventHandler<WindowEvent> closeEventHandler = new javafx.event.EventHandler<WindowEvent>( ) {
-        @Override
-        public void handle (WindowEvent event) {
-            //ТУТ НЕОБХОДИМАЯ ЛОГИКА
-        }
-    };
-
-    public void setAlreadyOpened (boolean alreadyOpened) {
-        this.alreadyOpened = alreadyOpened;
-    }
 
     @FXML
     private TableView table;
@@ -122,7 +112,8 @@ public class MainWindowCollectionController {
     @FXML
     private Button blup;
 
-    private boolean alreadyOpened;
+    private String command;
+
 
     @FXML
     private void initialize ( ) throws IOException {
@@ -157,8 +148,8 @@ public class MainWindowCollectionController {
         }
 
         if (enterDistanceController != null) {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
         }
 
         info.cancelButtonProperty( );
@@ -179,8 +170,8 @@ public class MainWindowCollectionController {
         }
 
         if (enterDistanceController != null) {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
         }
 
         String result = mainWindowCollectionModel.sumOfDistanceCommand( );
@@ -199,8 +190,8 @@ public class MainWindowCollectionController {
         }
 
         if (enterDistanceController != null) {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
         }
 
         String result = mainWindowCollectionModel.historyCommand( );
@@ -224,8 +215,8 @@ public class MainWindowCollectionController {
         }
 
         if (enterDistanceController != null) {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
         }
 
         String result = mainWindowCollectionModel.clearCommand( );
@@ -248,8 +239,8 @@ public class MainWindowCollectionController {
         }
 
         if (enterDistanceController != null) {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
         }
 
         List<Route> list = mainWindowCollectionModel.printAscendingCommand( );
@@ -269,25 +260,27 @@ public class MainWindowCollectionController {
         }
 
         if (enterDistanceController == null) {
-            openEnterDistance();
-        }
-        else {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
-            openEnterDistance();
+            openEnterDistance( );
+        } else {
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
+            openEnterDistance( );
         }
     }
 
     @FXML
     public void onActionAdd (ActionEvent actionEvent) throws IOException, InterruptedException {
+
+        command = "add";
+
         if (commandResultController != null) {
             Stage stage = (Stage) commandResultController.getText( ).getScene( ).getWindow( );
             stage.close( );
         }
 
         if (enterDistanceController != null) {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
         }
 
 
@@ -298,6 +291,8 @@ public class MainWindowCollectionController {
                 stage.close( );
             }
         } else openEnterRoute( );
+
+
     }
 
     public void doFilterLess (String dist) throws IOException {
@@ -305,7 +300,8 @@ public class MainWindowCollectionController {
         if (list != null) setColumnsByList(list);
     }
     public void doAdd ( ) throws IOException {
-        mainWindowCollectionModel.addCommand(clientProviding.getUserManager( ).getRoute( ));
+        mainWindowCollectionModel.addCommand();
+
     }
 
     public void openEnterRoute ( ) {
@@ -326,10 +322,8 @@ public class MainWindowCollectionController {
                         e.printStackTrace( );
                     }
                     enterRouteController = loader.getController( );
-                    alreadyOpened = true;
                     enterRouteController.getNameField( ).getScene( ).getWindow( ).setOnCloseRequest(new EventHandler<WindowEvent>( ) {
                         public void handle (WindowEvent we) {
-                            alreadyOpened = false;
                         }
                     });
 
@@ -367,32 +361,47 @@ public class MainWindowCollectionController {
 
     @FXML
     public void onActionRemoveLower (ActionEvent actionEvent) {
+
+        command = "remove_lower";
+
         if (enterRouteController != null) {
             Stage stage = (Stage) enterRouteController.getNameField( ).getScene( ).getWindow( );
             stage.close( );
-            alreadyOpened = false;
         }
 
         if (enterDistanceController != null) {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
         }
+
+        openEnterRoute( );
 
     }
 
+   public void doRemoveLower() {
+        mainWindowCollectionModel.removeLowerCommand();
+   }
+
     @FXML
     public void onActionRemoveGreater (ActionEvent actionEvent) {
+
+        command = "remove_greater";
         if (enterRouteController != null) {
             Stage stage = (Stage) enterRouteController.getNameField( ).getScene( ).getWindow( );
             stage.close( );
-            alreadyOpened = false;
         }
 
         if (enterDistanceController != null) {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
         }
 
+        openEnterRoute();
+
+    }
+
+    public void doRemoveGreater() {
+        mainWindowCollectionModel.removeGreaterCommand();
     }
 
 
@@ -411,12 +420,10 @@ public class MainWindowCollectionController {
                     e.printStackTrace( );
                 }
                 commandResultController = loader.getController( );
-                alreadyOpened = true;
                 commandResultController.setResult(result);
                 commandResultController.setMainWindowCollectionController(this);
                 commandResultController.getText( ).getScene( ).getWindow( ).setOnCloseRequest(new EventHandler<WindowEvent>( ) {
                     public void handle (WindowEvent we) {
-                        alreadyOpened = false;
                     }
                 });
             });
@@ -429,7 +436,6 @@ public class MainWindowCollectionController {
         this.clientProviding = clientProviding;
         this.clientApp = clientApp;
         mainWindowCollectionModel = new MainWindowCollectionModel(clientProviding);
-        alreadyOpened = false;
         clientProviding.getClientNotifying( ).setMainWindowCollectionController(this);
 
         setColumns(clientProviding.getRoutes( ));
@@ -459,6 +465,10 @@ public class MainWindowCollectionController {
         } catch (IllegalStateException ex) {
             ex.printStackTrace( );
         }
+    }
+
+    public String getCommand ( ) {
+        return command;
     }
 
 }
