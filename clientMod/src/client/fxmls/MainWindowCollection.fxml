@@ -39,7 +39,7 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <MenuButton fx:id="language1" mnemonicParsing="false" prefHeight="27.0" prefWidth="320.0" text="Выберите язык">
+                        <MenuButton fx:id="language1" mnemonicParsing="false" prefHeight="27.0" prefWidth="330.0" text="Выберите язык">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#onActionRussian" text="Русский" />
                               <MenuItem mnemonicParsing="false" onAction="#onActionEstlane" text="Eestlane" />
@@ -68,7 +68,7 @@
                               <TableColumn fx:id="toName" prefWidth="85.0" text="To Name" />
                               <TableColumn fx:id="toX" prefWidth="50.0" text="To X" />
                               <TableColumn fx:id="toY" prefWidth="47.0" text="To Y" />
-                              <TableColumn fx:id="distance" text="Дальность" />
+                              <TableColumn fx:id="Ddistance" text="Дальность" />
                           </columns>
                            <HBox.margin>
                               <Insets left="30.0" right="15.0" />
@@ -81,9 +81,9 @@
                         <Insets right="20.0" top="8.0" />
                      </VBox.margin>
                      <buttons>
-                        <Button fx:id="sum_of_distance" mnemonicParsing="false" onAction="#onActionSumOfDistance" prefHeight="53.0" prefWidth="191.0" text="Сумма дальностей маршрутов" textAlignment="CENTER" />
-                        <Button fx:id="history" mnemonicParsing="false" onAction="#onActionHistory" prefHeight="53.0" prefWidth="354.0" text="История введенных команд" textAlignment="CENTER" />
-                        <Button fx:id="info" mnemonicParsing="false" onAction="#onActionInfo" prefHeight="54.0" prefWidth="237.0" text="Информация о коллекции" textAlignment="CENTER" />
+                        <Button fx:id="Bsum_of_distance" mnemonicParsing="false" onAction="#onActionSumOfDistance" prefHeight="53.0" prefWidth="191.0" text="Сумма дальностей маршрутов" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="Bhistory" mnemonicParsing="false" onAction="#onActionHistory" prefHeight="53.0" prefWidth="354.0" text="История введенных команд" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="Binfo" mnemonicParsing="false" onAction="#onActionInfo" prefHeight="54.0" prefWidth="237.0" text="Информация о коллекции" textAlignment="CENTER" wrapText="true" />
                      </buttons>
                      <opaqueInsets>
                         <Insets />
@@ -91,14 +91,14 @@
                   </ButtonBar>
                   <ButtonBar layoutX="50.0" layoutY="359.0" prefHeight="61.0" prefWidth="796.0">
                      <buttons>
-                        <Button fx:id="add" mnemonicParsing="false" onAction="#onActionAdd" prefHeight="55.0" prefWidth="191.0" text="Добавить маршрут" textAlignment="CENTER">
+                        <Button fx:id="Badd" mnemonicParsing="false" onAction="#onActionAdd" prefHeight="55.0" prefWidth="191.0" text="Добавить маршрут" textAlignment="CENTER" wrapText="true">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                         </Button>
-                        <Button fx:id="execute_script" mnemonicParsing="false" onAction="#onActionExecuteScript" prefHeight="56.0" prefWidth="191.0" text="Выполнить скрипт" textAlignment="CENTER" />
-                        <Button fx:id="clear" mnemonicParsing="false" onAction="#onActionClear" prefHeight="55.0" text="Очистить коллекцию" textAlignment="CENTER" />
-                        <Button fx:id="filter_less_than_distance" mnemonicParsing="false" onAction="#onActionFilterLess" prefHeight="56.0" prefWidth="237.0" text="Отфильтровать по дальности, меньше заданной" textAlignment="CENTER" />
+                        <Button fx:id="Bexecute_script" mnemonicParsing="false" onAction="#onActionExecuteScript" prefHeight="56.0" prefWidth="191.0" text="Выполнить скрипт" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="Bclear" mnemonicParsing="false" onAction="#onActionClear" prefHeight="55.0" text="Очистить коллекцию" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="Bfilter_less_than_distance" mnemonicParsing="false" onAction="#onActionFilterLess" prefHeight="56.0" prefWidth="237.0" text="Отфильтровать по дальности, меньше заданной" textAlignment="CENTER" wrapText="true" />
                      </buttons>
                      <opaqueInsets>
                         <Insets />
@@ -109,14 +109,14 @@
                   </ButtonBar>
                   <ButtonBar layoutX="50.0" layoutY="349.0" prefHeight="60.0" prefWidth="796.0">
                      <buttons>
-                        <Button fx:id="print_ascending" mnemonicParsing="false" onAction="#onActionPrintAscending" prefHeight="57.0" prefWidth="237.0" text="Вывести коллекцию в порядке возрастания" textAlignment="CENTER" />
-                        <Button fx:id="remove_greater" mnemonicParsing="false" onAction="#onActionRemoveGreater" prefHeight="56.0" prefWidth="191.0" text="Удалить объекты, большие заданного" textAlignment="CENTER">
+                        <Button fx:id="Bprint_ascending" mnemonicParsing="false" onAction="#onActionPrintAscending" prefHeight="57.0" prefWidth="237.0" text="Вывести коллекцию в порядке возрастания" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="Bremove_greater" mnemonicParsing="false" onAction="#onActionRemoveGreater" prefHeight="56.0" prefWidth="191.0" text="Удалить объекты, большие заданного" textAlignment="CENTER" wrapText="true">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                         </Button>
-                        <Button fx:id="remove_lower" mnemonicParsing="false" onAction="#onActionRemoveLower" prefHeight="55.0" prefWidth="191.0" text="Удалить объекты, меньшие заданного" textAlignment="CENTER" />
-                        <Button fx:id="blup" mnemonicParsing="false" prefHeight="55.0" text="Можете пожамкать и снять стресс" textAlignment="CENTER" />
+                        <Button fx:id="Bremove_lower" mnemonicParsing="false" onAction="#onActionRemoveLower" prefHeight="55.0" prefWidth="191.0" text="Удалить объекты, меньшие заданного" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="blup" mnemonicParsing="false" prefHeight="55.0" text="Можете пожамкать и снять стресс" textAlignment="CENTER" wrapText="true" />
                      </buttons>
                      <opaqueInsets>
                         <Insets />
@@ -140,9 +140,9 @@
                               <Insets right="20.0" />
                            </VBox.margin>
                            <buttons>
-                              <Button fx:id="sum_of_distance1" mnemonicParsing="false" onAction="#onActionSumOfDistance" prefHeight="53.0" prefWidth="191.0" text="Сумма дальностей маршрутов" textAlignment="CENTER" />
-                              <Button fx:id="history1" mnemonicParsing="false" onAction="#onActionHistory" prefHeight="53.0" prefWidth="354.0" text="История введенных команд" textAlignment="CENTER" />
-                              <Button fx:id="info1" mnemonicParsing="false" onAction="#onActionInfo" prefHeight="54.0" prefWidth="237.0" text="Информация о коллекции" textAlignment="CENTER" />
+                              <Button fx:id="Bsum_of_distance" mnemonicParsing="false" onAction="#onActionSumOfDistance" prefHeight="53.0" prefWidth="191.0" text="Сумма дальностей маршрутов" textAlignment="CENTER" wrapText="true" />
+                              <Button fx:id="Bhistory" mnemonicParsing="false" onAction="#onActionHistory" prefHeight="53.0" prefWidth="354.0" text="История введенных команд" textAlignment="CENTER" wrapText="true" />
+                              <Button fx:id="Binfo" mnemonicParsing="false" onAction="#onActionInfo" prefHeight="54.0" prefWidth="237.0" text="Информация о коллекции" textAlignment="CENTER" wrapText="true" />
                            </buttons>
                            <opaqueInsets>
                               <Insets />
@@ -150,14 +150,14 @@
                         </ButtonBar>
                         <ButtonBar layoutX="50.0" layoutY="359.0" prefHeight="61.0" prefWidth="796.0">
                            <buttons>
-                              <Button fx:id="add1" mnemonicParsing="false" onAction="#onActionAdd" prefHeight="55.0" prefWidth="191.0" text="Добавить маршрут" textAlignment="CENTER">
+                              <Button fx:id="Badd" mnemonicParsing="false" onAction="#onActionAdd" prefHeight="55.0" prefWidth="191.0" text="Добавить маршрут" textAlignment="CENTER" wrapText="true">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </Button>
-                              <Button fx:id="execute_script1" mnemonicParsing="false" prefHeight="56.0" prefWidth="191.0" text="Выполнить скрипт" textAlignment="CENTER" />
-                              <Button fx:id="clear1" mnemonicParsing="false" onAction="#onActionClear" prefHeight="55.0" text="Очистить коллекцию" textAlignment="CENTER" />
-                              <Button fx:id="filter_less_than_distance1" mnemonicParsing="false" onAction="#onActionFilterLess" prefHeight="56.0" prefWidth="237.0" text="Отфильтровать по дальности, меньше заданной" textAlignment="CENTER" />
+                              <Button fx:id="Bexecute_script" mnemonicParsing="false" prefHeight="56.0" prefWidth="191.0" text="Выполнить скрипт" textAlignment="CENTER" wrapText="true" />
+                              <Button fx:id="Bclear" mnemonicParsing="false" onAction="#onActionClear" prefHeight="55.0" text="Очистить коллекцию" textAlignment="CENTER" wrapText="true" />
+                              <Button fx:id="Bfilter_less_than_distance" mnemonicParsing="false" onAction="#onActionFilterLess" prefHeight="56.0" prefWidth="237.0" text="Отфильтровать по дальности, меньше заданной" textAlignment="CENTER" wrapText="true" />
                            </buttons>
                            <opaqueInsets>
                               <Insets />
@@ -168,14 +168,14 @@
                         </ButtonBar>
                         <ButtonBar layoutX="50.0" layoutY="349.0" prefHeight="60.0" prefWidth="796.0">
                            <buttons>
-                              <Button fx:id="print_ascending1" mnemonicParsing="false" onAction="#onActionPrintAscending" prefHeight="57.0" prefWidth="237.0" text="Вывести коллекцию в порядке возрастания" textAlignment="CENTER" />
-                              <Button fx:id="remove_greater1" mnemonicParsing="false" onAction="#onActionRemoveGreater" prefHeight="56.0" prefWidth="191.0" text="Удалить объекты, большие заданного" textAlignment="CENTER">
+                              <Button fx:id="Bprint_ascending" mnemonicParsing="false" onAction="#onActionPrintAscending" prefHeight="57.0" prefWidth="237.0" text="Вывести коллекцию в порядке возрастания" textAlignment="CENTER" wrapText="true" />
+                              <Button fx:id="Bremove_greater" mnemonicParsing="false" onAction="#onActionRemoveGreater" prefHeight="56.0" prefWidth="191.0" text="Удалить объекты, большие заданного" textAlignment="CENTER" wrapText="true">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </Button>
-                              <Button fx:id="remove_lower1" mnemonicParsing="false" onAction="#onActionRemoveLower" prefHeight="55.0" prefWidth="191.0" text="Удалить объекты, меньшие заданного" textAlignment="CENTER" />
-                              <Button fx:id="blup1" mnemonicParsing="false" prefHeight="55.0" text="Можете пожамкать и снять стресс" textAlignment="CENTER" />
+                              <Button fx:id="Bremove_lower" mnemonicParsing="false" onAction="#onActionRemoveLower" prefHeight="55.0" prefWidth="191.0" text="Удалить объекты, меньшие заданного" textAlignment="CENTER" wrapText="true" />
+                              <Button fx:id="blup" mnemonicParsing="false" prefHeight="55.0" text="Можете пожамкать и снять стресс" textAlignment="CENTER" wrapText="true" />
                            </buttons>
                            <opaqueInsets>
                               <Insets />
@@ -190,11 +190,11 @@
                      </padding>
                   </VBox>
                   <Canvas fx:id="canvas" height="380.0" layoutX="36.0" layoutY="14.0" onMouseClicked="#onActionMouseClicked" width="380.0" />
-                  <HBox layoutX="2.0" layoutY="1.0" prefHeight="27.0" prefWidth="939.0">
+                  <HBox layoutX="2.0" layoutY="-1.0" prefHeight="29.0" prefWidth="939.0">
                      <children>
                         <Label fx:id="user" alignment="CENTER" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="128.0" text="Пользователь: ">
                            <HBox.margin>
-                              <Insets left="450.0" />
+                              <Insets left="442.0" />
                            </HBox.margin>
                         </Label>
                         <Label fx:id="username" contentDisplay="RIGHT" prefHeight="29.0" prefWidth="254.0">
@@ -202,13 +202,16 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <MenuButton fx:id="language" mnemonicParsing="false" prefHeight="32.0" prefWidth="173.0" text="Выберите язык">
+                        <MenuButton fx:id="language" mnemonicParsing="false" prefHeight="29.0" prefWidth="197.0" text="Выберите язык">
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#onActionRussian" text="Русский" />
                             <MenuItem mnemonicParsing="false" onAction="#onActionEstlane" text="Eestlane" />
                               <MenuItem mnemonicParsing="false" onAction="#onActionCatala" text="Català" />
                               <MenuItem mnemonicParsing="false" onAction="#onActionEnglish" text="English" />
                           </items>
+                           <HBox.margin>
+                              <Insets top="1.0" />
+                           </HBox.margin>
                         </MenuButton>
                      </children>
                   </HBox>

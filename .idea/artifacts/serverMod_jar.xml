@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="serverMod:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/serverMod_jar</output-path>
+    <root id="archive" name="serverMod.jar">
+      <element id="module-output" name="serverMod" />
+      <element id="module-output" name="commonMod" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../rubezhka/src/postgresql-42.2.12.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

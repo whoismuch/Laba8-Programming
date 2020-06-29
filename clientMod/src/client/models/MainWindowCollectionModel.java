@@ -61,17 +61,17 @@ public class MainWindowCollectionModel {
         else return (List<Route>) o;
     }
 
-    public void removeLowerCommand() {
+    public void removeLowerCommand() throws IOException {
         clientProviding.clientWork();
         clientProviding.sendCommand("remove_lower");
     }
 
-    public void removeGreaterCommand() {
+    public void removeGreaterCommand() throws IOException {
         clientProviding.clientWork();
         clientProviding.sendCommand("remove_greater");
     }
 
-    public String executeScriptCommand (String arg) {
+    public String executeScriptCommand (String arg) throws IOException {
         clientProviding.clientWork();
         clientProviding.setArg(arg);
         return clientProviding.sendCommand("execute_script").toString();

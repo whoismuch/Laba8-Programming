@@ -1,13 +1,12 @@
 package client.controllers;
 
 import client.ClientApp;
+import languages.*;
 import client.models.ClientProviding;
 import client.models.ConnectionModel;
 import client.models.UniversalLocalizationModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 import javafx.event.ActionEvent;
@@ -15,9 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class ConnectionController {
@@ -54,25 +51,29 @@ public class ConnectionController {
     private Label enterPort;
 
     @FXML
-    public void onActionConnection (ActionEvent event) throws IOException, InterruptedException {
-        address = tf1.getText( );
-        port = tf2.getText( );
-        result = connectionModel.connect(address, port);
-        connectionResult.setText(bundle.getString(result));
+    public void onActionConnection (ActionEvent event) throws InterruptedException {
+        try {
+            address = tf1.getText( );
+            port = tf2.getText( );
+            result = connectionModel.connect(address, port);
+            connectionResult.setText(bundle.getString(result));
 
-        nextStep(result);
+            nextStep(result);
+        }  catch (IOException ex) {
+            connectionResult.setText(bundle.getString(LanguageRU.serverIsNotAv));
+        }
     }
 
     @FXML
     public void onActionRussian (ActionEvent actionEvent) throws UnsupportedEncodingException {
-        bundle = ResourceBundle.getBundle("Language");
+        bundle = ResourceBundle.getBundle("languages.LanguageRU");
         universalLocalizationModel.changeLanguage(connectionResult.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(connectionResult, result, bundle);
     }
 
     @FXML
     public void onActionEstlane (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("Language", new Locale("est", "EST"));
+        bundle = ResourceBundle.getBundle("languages.LanguageEST", new Locale("est", "EST"));
         universalLocalizationModel.changeLanguage(connectionResult.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(connectionResult, result, bundle);
 
@@ -80,14 +81,14 @@ public class ConnectionController {
 
     @FXML
     public void onActionCatala (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("Language", new Locale("cat", "CAT"));
+        bundle = ResourceBundle.getBundle("languages.LanguageCAT", new Locale("cat", "CAT"));
         universalLocalizationModel.changeLanguage(connectionResult.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(connectionResult, result, bundle);
     }
 
     @FXML
     public void onActionEnglish (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("Language", new Locale("en", "ZA"));
+        bundle = ResourceBundle.getBundle("languages.LanguageEN", new Locale("en", "ZA"));
         universalLocalizationModel.changeLanguage(connectionResult.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(connectionResult, result, bundle);
     }

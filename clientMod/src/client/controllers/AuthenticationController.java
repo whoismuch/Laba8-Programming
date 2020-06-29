@@ -1,6 +1,7 @@
 package client.controllers;
 
 import client.ClientApp;
+import languages.*;
 import client.models.AuthenticationModel;
 import client.models.ClientProviding;
 import client.models.UniversalLocalizationModel;
@@ -15,7 +16,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
@@ -47,11 +47,16 @@ public class AuthenticationController {
 
 
     @FXML
-    public void onActionSignIn (ActionEvent actionEvent) throws IOException, InterruptedException {
-        result = authenticationModel.authorization(username.getText( ), password.getText( ));
-        authenticationResult.setText(bundle.getString(result));
+    public void onActionSignIn (ActionEvent actionEvent) throws InterruptedException {
+        try {
+            result = authenticationModel.authorization(username.getText( ), password.getText( ));
+            authenticationResult.setText(bundle.getString(result));
 
-        nextStep(result);
+            nextStep(result);
+        } catch (IOException ex) {
+            System.out.println(1);
+            authenticationResult.setText(bundle.getString(LanguageRU.serverIsNotAv));
+        }
 
     }
 
@@ -67,14 +72,14 @@ public class AuthenticationController {
 
     @FXML
     public void onActionRussian (ActionEvent actionEvent) throws UnsupportedEncodingException {
-        bundle = ResourceBundle.getBundle("Language");
+        bundle = ResourceBundle.getBundle("languages.LanguageRU");
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(authenticationResult, result, bundle);
     }
 
     @FXML
     public void onActionEstlane (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("Language", new Locale("est", "EST"));
+        bundle = ResourceBundle.getBundle("languages.LanguageEST", new Locale("est", "EST"));
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(authenticationResult, result, bundle);
 
@@ -82,14 +87,14 @@ public class AuthenticationController {
 
     @FXML
     public void onActionCatala (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("Language", new Locale("cat", "CAT"));
+        bundle = ResourceBundle.getBundle("languages.LanguageCAT", new Locale("cat", "CAT"));
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(authenticationResult, result, bundle);
     }
 
     @FXML
     public void onActionEnglish (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("Language", new Locale("en", "ZA"));
+        bundle = ResourceBundle.getBundle("languages.LanguageEN", new Locale("en", "ZA"));
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(authenticationResult, result, bundle);
     }
@@ -106,7 +111,7 @@ public class AuthenticationController {
                     Stage stage = (Stage) authenticationResult.getScene( ).getWindow( );
                     stage.close( );
                     try {
-                        clientApp.showMainWindow( );
+                        clientApp.showMainWindow(bundle);
                     } catch (IOException e) {
                         e.printStackTrace( );
                     }

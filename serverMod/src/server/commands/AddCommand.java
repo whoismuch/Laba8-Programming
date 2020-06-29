@@ -40,7 +40,7 @@ public class AddCommand implements Command {
     public String execute(ICollectionManager icm, String arg, Route route, Driver driver, String username) {
         try {
             icm.add(route, username);
-            return "Объект " + route.getName() + " успешно добавлен в коллекцию!";
+            return "Объект успешно добавлен в коллекцию!";
         }catch (ClassCastException e){
             return "Ошибка при создании класса";
         }

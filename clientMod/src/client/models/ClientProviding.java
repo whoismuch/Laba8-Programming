@@ -8,6 +8,7 @@ import common.command.CommandDescription;
 import common.generatedClasses.Route;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.channels.SelectionKey;
@@ -73,8 +74,7 @@ public class ClientProviding {
     /**
      * Устанавливает активное соединение с сервером.
      */
-    public void clientWork ( ) {
-        try {
+    public void clientWork ( ) throws IOException, ConnectException{
             SocketChannel notifyingChannel = SocketChannel.open( );
             SocketChannel outcomingchannel = SocketChannel.open( );
             SocketAddress outcoming = new InetSocketAddress((address), Integer.parseInt(port));
@@ -91,7 +91,7 @@ public class ClientProviding {
 
             if (a == 0) {
                 clientNotifying = new ClientNotifying(notifyingChannel, notifyFromServer, mainController, this);
-                new Thread(clientNotifying).start();
+                new Thread(clientNotifying).start( );
                 a = 1;
             }
 //            ClientNotifying clientNotifying = new ClientNotifying(notifyingChannel, notifyFromServer, mainController, this);
@@ -105,11 +105,6 @@ public class ClientProviding {
             selector.select( );
             userManager.setAvailable((HashMap) dataExchangeWithServer.getFromServer( ));
 
-        } catch (IOException ex) {
-//            executorService.shutdown( );
-            clientWork( );
-        } catch (NullPointerException ex) {
-        }
     }
 
 
@@ -123,7 +118,7 @@ public class ClientProviding {
         return username;
     }
 
-    public Object sendCommand (String commandname) {
+    public Object sendCommand (String commandname) throws IOException {
         try {
             CommandDescription command;
             if (userManager.checkElement(commandname)) {
@@ -201,7 +196,7 @@ public class ClientProviding {
         this.address = address;
     }
 
-    public Object authorization (String username, String password) {
+    public Object authorization (String username, String password) throws IOException {
         try {
             this.username = username;
             this.password = password;

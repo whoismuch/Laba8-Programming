@@ -35,7 +35,7 @@ public class UpdateIdCommand implements Command {
     @Override
     public String execute(ICollectionManager icm, String arg, Route route, Driver driver, String username) {
         Long id = Long.parseLong(arg);
-        return (icm.updateId(id,route, username)? "Объект с id: " + id + " обновлен" : "Элемент с введенным id не найден и/или вам не принадлежит");
+        return (icm.updateId(id,route, username)? "Объект обновлен!" : "Элемент с введенным id не найден и/или вам не принадлежит");
     }
 
     /**

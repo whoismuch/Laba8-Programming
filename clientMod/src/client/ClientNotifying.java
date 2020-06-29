@@ -54,6 +54,7 @@ public class ClientNotifying implements Runnable {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace( );
+        } catch (ClassCastException ex) {
         }
     }
 }

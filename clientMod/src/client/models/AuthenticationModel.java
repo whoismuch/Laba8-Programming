@@ -1,6 +1,9 @@
 package client.models;
 
+import languages.*;
+
 import java.io.IOException;
+import java.net.ConnectException;
 
 public class AuthenticationModel {
 
@@ -11,14 +14,22 @@ public class AuthenticationModel {
     }
 
     public String authorization(String username, String password) throws IOException {
-        clientProviding.clientWork();
-        String result = clientProviding.authorization(username, password).toString();
-        return result;
+        try {
+            clientProviding.clientWork( );
+            String result = clientProviding.authorization(username, password).toString( );
+            return result;
+        } catch (ConnectException ex) {
+            return (LanguageRU.serverIsNotAv);
+        }
     }
 
     public String registration(String username, String password) throws IOException {
-        clientProviding.clientWork();
-        String result = clientProviding.registration(username, password).toString();
-        return result;
+        try {
+            clientProviding.clientWork( );
+            String result = clientProviding.registration(username, password).toString( );
+            return result;
+        } catch (ConnectException ex) {
+            return (LanguageRU.serverIsNotAv);
+        }
     }
 }

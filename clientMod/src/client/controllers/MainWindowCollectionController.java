@@ -90,40 +90,7 @@ public class MainWindowCollectionController {
     private TableColumn<FullRoute, Long> toY;
 
     @FXML
-    private TableColumn<FullRoute, Float> distance;
-
-    @FXML
-    private Button info;
-
-    @FXML
-    private Button sum_of_distance;
-
-    @FXML
-    private Button history;
-
-    @FXML
-    private Button add;
-
-    @FXML
-    private Button execute_script;
-
-    @FXML
-    private Button clear;
-
-    @FXML
-    private Button filter_less_than_distance;
-
-    @FXML
-    private Button print_ascending;
-
-    @FXML
-    private Button remove_greater;
-
-    @FXML
-    private Button remove_lower;
-
-    @FXML
-    private Button blup;
+    private TableColumn<FullRoute, Float> Ddistance;
 
     @FXML
     private Canvas canvas;
@@ -132,22 +99,7 @@ public class MainWindowCollectionController {
     private Label username1;
 
     @FXML
-    private Tab collection;
-
-    @FXML
-    private Tab graphics;
-
-    @FXML
     private Label user;
-
-    @FXML
-    private Label user1;
-
-    @FXML
-    private MenuButton language;
-
-    @FXML
-    private MenuButton language1;
 
     @FXML
     private TabPane tabPane;
@@ -162,12 +114,6 @@ public class MainWindowCollectionController {
 
     @FXML
     private void initialize ( ) throws IOException {
-        sum_of_distance.setWrapText(true);
-        filter_less_than_distance.setWrapText(true);
-        print_ascending.setWrapText(true);
-        remove_greater.setWrapText(true);
-        remove_lower.setWrapText(true);
-        blup.setWrapText(true);
 
         id.setCellValueFactory(new PropertyValueFactory<FullRoute, Long>("id"));
         owner.setCellValueFactory(new PropertyValueFactory<FullRoute, String>("username"));
@@ -181,7 +127,7 @@ public class MainWindowCollectionController {
         toName.setCellValueFactory(new PropertyValueFactory<FullRoute, String>("toName"));
         toX.setCellValueFactory(new PropertyValueFactory<FullRoute, Long>("toX"));
         toY.setCellValueFactory(new PropertyValueFactory<FullRoute, Long>("toY"));
-        distance.setCellValueFactory(new PropertyValueFactory<FullRoute, Float>("distance"));
+        Ddistance.setCellValueFactory(new PropertyValueFactory<FullRoute, Float>("distance"));
 
 
         forFilter.textProperty( ).addListener((observable, oldValue, newValue) -> { // filter_area - текствое поле , куда ты будешь вводить текст дл€ фильтрации
@@ -211,7 +157,7 @@ public class MainWindowCollectionController {
                     } catch (NumberFormatException ex) {
                     }
 
-                    if (route.getCreationDate().toString().contains(lowerCaseFilter)) {
+                    if (route.getCreationDate( ).toString( ).contains(lowerCaseFilter)) {
                         return true;
                     }
 
@@ -293,7 +239,7 @@ public class MainWindowCollectionController {
     }
 
     @FXML
-    public void onActionMouseClicked(MouseEvent mouseEvent) {
+    public void onActionMouseClicked (MouseEvent mouseEvent) {
 //        double finalCoordX = (coord)
     }
 
@@ -310,7 +256,7 @@ public class MainWindowCollectionController {
         }
 
         if (enterScriptController != null) {
-            Stage stage = (Stage) enterScriptController.getDone().getScene( ).getWindow( );
+            Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
         }
 
@@ -336,7 +282,7 @@ public class MainWindowCollectionController {
         }
 
         if (enterScriptController != null) {
-            Stage stage = (Stage) enterScriptController.getDone().getScene( ).getWindow( );
+            Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
         }
 
@@ -361,7 +307,7 @@ public class MainWindowCollectionController {
         }
 
         if (enterScriptController != null) {
-            Stage stage = (Stage) enterScriptController.getDone().getScene( ).getWindow( );
+            Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
         }
 
@@ -391,7 +337,7 @@ public class MainWindowCollectionController {
         }
 
         if (enterScriptController != null) {
-            Stage stage = (Stage) enterScriptController.getDone().getScene( ).getWindow( );
+            Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
         }
 
@@ -418,7 +364,7 @@ public class MainWindowCollectionController {
         }
 
         if (enterScriptController != null) {
-            Stage stage = (Stage) enterScriptController.getDone().getScene( ).getWindow( );
+            Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
         }
 
@@ -439,7 +385,7 @@ public class MainWindowCollectionController {
         }
 
         if (enterScriptController != null) {
-            Stage stage = (Stage) enterScriptController.getDone().getScene( ).getWindow( );
+            Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
         }
 
@@ -468,7 +414,7 @@ public class MainWindowCollectionController {
         }
 
         if (enterScriptController != null) {
-            Stage stage = (Stage) enterScriptController.getDone().getScene( ).getWindow( );
+            Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
         }
 
@@ -496,17 +442,17 @@ public class MainWindowCollectionController {
             stage.close( );
         }
 
-        if (enterDistanceController!= null) {
-            Stage stage = (Stage) enterDistanceController.getDone().getScene().getWindow();
-            stage.close();
+        if (enterDistanceController != null) {
+            Stage stage = (Stage) enterDistanceController.getDone( ).getScene( ).getWindow( );
+            stage.close( );
         }
 
         if (enterScriptController == null) {
-            openEnterScript();
+            openEnterScript( );
         } else {
             Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
-            openEnterScript();
+            openEnterScript( );
         }
     }
 
@@ -524,7 +470,7 @@ public class MainWindowCollectionController {
         return mainWindowCollectionModel.executeScriptCommand(arg);
     }
 
-    public void openEnterScript () {
+    public void openEnterScript ( ) {
         Thread thread = new Thread(new Runnable( ) {
             @Override
             public void run ( ) {
@@ -563,7 +509,7 @@ public class MainWindowCollectionController {
                 Platform.runLater(( ) -> {
                     FXMLLoader loader = null;
                     try {
-                        loader = clientApp.showEnterRoute( );
+                        loader = clientApp.showEnterRoute(bundle);
                     } catch (IOException e) {
                         e.printStackTrace( );
                     }
@@ -621,7 +567,7 @@ public class MainWindowCollectionController {
         }
 
         if (enterScriptController != null) {
-            Stage stage = (Stage) enterScriptController.getDone().getScene( ).getWindow( );
+            Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
         }
 
@@ -629,7 +575,7 @@ public class MainWindowCollectionController {
 
     }
 
-    public void doRemoveLower ( ) {
+    public void doRemoveLower ( ) throws IOException {
         mainWindowCollectionModel.removeLowerCommand( );
     }
 
@@ -648,7 +594,7 @@ public class MainWindowCollectionController {
         }
 
         if (enterScriptController != null) {
-            Stage stage = (Stage) enterScriptController.getDone().getScene( ).getWindow( );
+            Stage stage = (Stage) enterScriptController.getDone( ).getScene( ).getWindow( );
             stage.close( );
         }
 
@@ -656,7 +602,7 @@ public class MainWindowCollectionController {
 
     }
 
-    public void doRemoveGreater ( ) {
+    public void doRemoveGreater ( ) throws IOException {
         mainWindowCollectionModel.removeGreaterCommand( );
     }
 
@@ -671,17 +617,12 @@ public class MainWindowCollectionController {
             Platform.runLater(( ) -> {
                 FXMLLoader loader = null;
                 try {
-                    loader = clientApp.showCommandResult( );
+                    loader = clientApp.showCommandResult(bundle);
                 } catch (IOException e) {
                     e.printStackTrace( );
                 }
                 commandResultController = loader.getController( );
                 commandResultController.setResult(result);
-                commandResultController.setMainWindowCollectionController(this);
-                commandResultController.getText( ).getScene( ).getWindow( ).setOnCloseRequest(new EventHandler<WindowEvent>( ) {
-                    public void handle (WindowEvent we) {
-                    }
-                });
             });
         }).start( );
 
@@ -690,35 +631,45 @@ public class MainWindowCollectionController {
 
     @FXML
     public void onActionRussian (ActionEvent actionEvent) throws UnsupportedEncodingException {
-        bundle = ResourceBundle.getBundle("Language");
-        universalLocalizationModel.changeLanguage(username.getParent().getParent().getParent().getParent(), bundle);
+        bundle = ResourceBundle.getBundle("languages.LanguageRU");
+        universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
+
+        if (commandResultController != null) commandResultController.translate(bundle);
+        if (enterRouteController != null) enterRouteController.translate(bundle);
     }
 
     @FXML
     public void onActionEstlane (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("Language", new Locale("est", "EST"));
-        universalLocalizationModel.changeLanguage(username.getParent().getParent().getParent().getParent(), bundle);
+        bundle = ResourceBundle.getBundle("languages.LanguageEST", new Locale("est", "EST"));
+        universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
+        if (commandResultController != null) commandResultController.translate(bundle);
+        if (enterRouteController != null) enterRouteController.translate(bundle);
+
     }
 
     @FXML
     public void onActionCatala (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("Language", new Locale("cat", "CAT"));
-        universalLocalizationModel.changeLanguage(username.getParent().getParent().getParent().getParent(), bundle);
+        bundle = ResourceBundle.getBundle("languages.LanguageCAT", new Locale("cat", "CAT"));
+        universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
+        if (commandResultController != null) commandResultController.translate(bundle);
+        if (enterRouteController != null) enterRouteController.translate(bundle);
     }
 
     @FXML
     public void onActionEnglish (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("Language", new Locale("en", "ZA"));
-        universalLocalizationModel.changeLanguage(username.getParent().getParent().getParent().getParent(), bundle);
-
+        bundle = ResourceBundle.getBundle("languages.LanguageEN", new Locale("en", "ZA"));
+        universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
+        if (commandResultController != null) commandResultController.translate(bundle);
+        if (enterRouteController != null) enterRouteController.translate(bundle);
     }
 
 
-    public void setEverything (ClientProviding clientProviding, ClientApp clientApp, String address, String port, TabPane tabPane, UniversalLocalizationModel universalLocalizationModel) throws IOException {
+    public void setEverything (ClientProviding clientProviding, ClientApp clientApp, TabPane tabPane, UniversalLocalizationModel universalLocalizationModel, ResourceBundle bundle) throws IOException {
         this.clientProviding = clientProviding;
         this.clientApp = clientApp;
         this.tabPane = tabPane;
         this.universalLocalizationModel = universalLocalizationModel;
+        this.bundle = bundle;
         mainWindowCollectionModel = new MainWindowCollectionModel(clientProviding);
         clientProviding.getClientNotifying( ).setMainWindowCollectionController(this);
 
@@ -728,6 +679,9 @@ public class MainWindowCollectionController {
         username.setText(clientProviding.getUsername( ));
         username1.setText(clientProviding.getUsername( ));
 
+        Platform.runLater(( ) -> {
+            universalLocalizationModel.changeLanguage(user.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
+        });
 
     }
 
@@ -767,8 +721,8 @@ public class MainWindowCollectionController {
         }
         gc.fillOval(canvas.getWidth( ) / 2.0 + gran - 2.5, canvas.getHeight( ) / 2.0 - 2, 5, 5);
         gc.fillOval(canvas.getWidth( ) / 2.0 - gran + 2.5, canvas.getHeight( ) / 2.0 - 2, 5, 5);
-        gc.fillOval(canvas.getWidth( ) / 2.0 - 2.5, canvas.getHeight( ) / 2.0 + gran , 5, 5);
-        gc.fillOval(canvas.getWidth( ) / 2.0 - 2.5, canvas.getHeight( ) / 2.0 - gran , 5, 5);
+        gc.fillOval(canvas.getWidth( ) / 2.0 - 2.5, canvas.getHeight( ) / 2.0 + gran, 5, 5);
+        gc.fillOval(canvas.getWidth( ) / 2.0 - 2.5, canvas.getHeight( ) / 2.0 - gran, 5, 5);
 
 
         for (Route route : routes) {
@@ -776,19 +730,19 @@ public class MainWindowCollectionController {
             gc.beginPath( );
             gc.moveTo((canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale), (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale));
             gc.quadraticCurveTo((canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale), ((canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) + (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale)) / 2.0 - gran / 6, canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale, (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale));
-            gc.setStroke(colors.get(route.getUsername()));
+            gc.setStroke(colors.get(route.getUsername( )));
             gc.stroke( );
             gc.closePath( );
             gc.setStroke(Color.BLACK);
 
-            gc.setFill(colors.get(route.getUsername()));
+            gc.setFill(colors.get(route.getUsername( )));
             gc.fillOval((canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale) - 15, (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - 50, 30, 30);
             gc.fillPolygon(new double[]{canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale - 15, canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale, canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale + 15}, new double[]{(canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - 32, (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale), (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - 32}, 3);
             gc.setFill(javafx.scene.paint.Color.WHITE);
             gc.fillOval(canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale - 10, (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - 45, 20, 20);
             gc.setFill(Color.BLACK);
 
-            gc.setFill(colors.get(route.getUsername()));
+            gc.setFill(colors.get(route.getUsername( )));
             gc.fillOval((canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale) - 15, (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale) - 50, 30, 30);
             gc.fillPolygon(new double[]{canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale - 15, canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale, canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale + 15}, new double[]{(canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale) - 32, (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale), (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale) - 32}, 3);
             gc.setFill(javafx.scene.paint.Color.WHITE);
@@ -796,15 +750,16 @@ public class MainWindowCollectionController {
             gc.setFill(Color.BLACK);
         }
     }
-    public HashMap<String, Color> getColors(LinkedHashSet<Route> routes) {
-        HashMap<String, Color> map = new HashMap<>();
-        for (Route route: routes) {
-            int a = route.getUsername().hashCode();
+
+    public HashMap<String, Color> getColors (LinkedHashSet<Route> routes) {
+        HashMap<String, Color> map = new HashMap<>( );
+        for (Route route : routes) {
+            int a = route.getUsername( ).hashCode( );
             Float r = (a % 1000) * 0.001f;
-            Float g = (a %  1000000) * 0.000001f;
+            Float g = (a % 1000000) * 0.000001f;
             Float b = (a % 100000000) * 0.000000001f;
-            Color color = Color.color(Math.abs(r), Math.abs(g) ,Math.abs(b));
-            map.put(route.getUsername(), color);
+            Color color = Color.color(Math.abs(r), Math.abs(g), Math.abs(b));
+            map.put(route.getUsername( ), color);
         }
         return map;
     }

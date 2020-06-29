@@ -191,6 +191,7 @@ public class UserManager {
         try {
             now = 1;
             String r_name = name;
+            if (r_name.equals("")) return "Имя маршрута не может быть пустым";
             now = 2;
             Long r_coordX = Long.parseLong(coordX);
             now = 3;
@@ -209,6 +210,7 @@ public class UserManager {
             Long r_toY = Long.parseLong(toY);
             now = 10;
             Float r_distance = Float.parseFloat(distance);
+            if (r_distance <= 1.0) return "Дальность маршрута должна быть >1";
 
             this.route = new Route(r_name, new Coordinates(r_coordX, r_coordY), new Location(r_fromName, r_fromX, r_fromY), new Location(r_toName, r_toX, r_toY), r_distance);
 

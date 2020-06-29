@@ -9,7 +9,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.EnterRouteController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Го заполним поля объекта?" textAlignment="CENTER">
+      <Label fx:id="goEnterRoute" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Го заполним поля объекта?" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
@@ -17,7 +17,7 @@
             <Insets left="20.0" right="20.0" />
          </VBox.margin>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Название маршрута" textAlignment="CENTER">
+      <Label fx:id="nameER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Название маршрута" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
@@ -26,55 +26,55 @@
          </VBox.margin>
       </Label>
       <TextField fx:id="nameField" prefHeight="27.0" prefWidth="282.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Текущее местоположение X" textAlignment="CENTER">
+      <Label fx:id="nowXER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Текущее местоположение X" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <TextField fx:id="coordinateXField" prefHeight="27.0" prefWidth="282.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Текущее местоположение Y" textAlignment="CENTER">
+      <Label fx:id="nowYER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Текущее местоположение Y" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <TextField fx:id="coordinateYField" prefHeight="27.0" prefWidth="282.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Название места отправления" textAlignment="CENTER">
+      <Label fx:id="fromNameER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Название места отправления" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <TextField fx:id="fromNameField" prefHeight="27.0" prefWidth="282.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Координата X места отправления" textAlignment="CENTER">
+      <Label fx:id="fromXER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Координата X места отправления" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <TextField fx:id="fromXField" prefHeight="27.0" prefWidth="282.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Координата Y  места отправления" textAlignment="CENTER">
+      <Label fx:id="fromYER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Координата Y  места отправления" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <TextField fx:id="fromYField" prefHeight="27.0" prefWidth="282.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Название места прибытия" textAlignment="CENTER">
+      <Label fx:id="toNameER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Название места прибытия" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <TextField fx:id="toNameField" prefHeight="27.0" prefWidth="282.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Координата X места прибытия" textAlignment="CENTER">
+      <Label fx:id="toXER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Координата X места прибытия" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <TextField fx:id="toXField" prefHeight="27.0" prefWidth="282.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Координата Y места прибытия" textAlignment="CENTER">
+      <Label fx:id="toYER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Координата Y места прибытия" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <TextField fx:id="toYField" prefHeight="27.0" prefWidth="282.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Дальность маршрута" textAlignment="CENTER">
+      <Label fx:id="distanceER" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="443.0" text="Дальность маршрута" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
@@ -85,7 +85,7 @@
             <Insets left="50.0" right="50.0" />
          </VBox.margin>
       </Label>
-      <Button fx:id="done" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onActionDone" prefHeight="41.0" prefWidth="460.0" text="Выполнить" textAlignment="CENTER">
+      <Button fx:id="doneER" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onActionDone" prefHeight="41.0" prefWidth="460.0" text="Выполнить" textAlignment="CENTER">
          <VBox.margin>
             <Insets left="100.0" right="100.0" />
          </VBox.margin>

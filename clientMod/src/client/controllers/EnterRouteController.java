@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class EnterRouteController {
 
@@ -25,6 +26,7 @@ public class EnterRouteController {
     private EnterRouteModel enterRouteModel;
     private MainWindowCollectionController mainWindowCollectionController;
     private UniversalLocalizationModel universalLocalizationModel;
+    private ResourceBundle bundle;
 
 
     @FXML
@@ -58,10 +60,12 @@ public class EnterRouteController {
     public Label validationResult;
 
     @FXML
-    public Button done;
+    public Button doneER;
 
     @FXML
     private TextField nameField;
+
+    private String result;
 
     public TextField getNameField ( ) {
         return nameField;
@@ -70,9 +74,10 @@ public class EnterRouteController {
 
     public void onActionDone (ActionEvent actionEvent) throws IOException, InterruptedException {
         validationResult.setWrapText(true);
-        String result = enterRouteModel.checkRoute (nameField.getText(), coordinateXField.getText(), coordinateYField.getText(), fromNameField.getText(), fromXField.getText(), fromYField.getText(), toNameField.getText(), toXField.getText(), toYField.getText(), distanceField.getText());
+        result = enterRouteModel.checkRoute (nameField.getText(), coordinateXField.getText(), coordinateYField.getText(), fromNameField.getText(), fromXField.getText(), fromYField.getText(), toNameField.getText(), toXField.getText(), toYField.getText(), distanceField.getText());
+        universalLocalizationModel.setNormalResult(result);
 
-        validationResult.setText(result);
+        validationResult.setText(bundle.getString(result));
 
         if (result.equals("Весьма симпатичный маршрут. Так держать")) {
             if (mainWindowCollectionController.getCommand().equals("add")) mainWindowCollectionController.doAdd();
@@ -85,7 +90,7 @@ public class EnterRouteController {
                     e.printStackTrace( );
                 }
                 Platform.runLater(() -> {
-                Stage stage = (Stage) done.getScene( ).getWindow( );
+                Stage stage = (Stage) doneER.getScene( ).getWindow( );
                 stage.close( );
             });}).start();
         }
@@ -93,15 +98,21 @@ public class EnterRouteController {
 
 
 
-    public void setEverything (ClientProviding clientProviding, ClientApp clientApp, UniversalLocalizationModel universalLocalizationModel) {
+    public void setEverything (ClientProviding clientProviding, ClientApp clientApp, UniversalLocalizationModel universalLocalizationModel, MainWindowCollectionController mainWindowCollectionController, ResourceBundle bundle) {
 
         this.clientProviding = clientProviding;
         this.clientApp = clientApp;
         this.universalLocalizationModel = universalLocalizationModel;
+        this.mainWindowCollectionController = mainWindowCollectionController;
         enterRouteModel = new EnterRouteModel(clientProviding);
+        this.bundle = bundle;
+
+        Platform.runLater(() -> translate(bundle));
+
     }
 
-    public void setMainWindowCollectionController (MainWindowCollectionController mainWindowCollectionController) {
-        this.mainWindowCollectionController = mainWindowCollectionController;
+    public void translate(ResourceBundle bundle) {
+        universalLocalizationModel.changeLanguage(doneER.getParent(), bundle);
+        universalLocalizationModel.updateLabels(validationResult, result, bundle);
     }
 }

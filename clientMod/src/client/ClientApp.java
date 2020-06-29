@@ -12,6 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
@@ -31,8 +33,8 @@ public class ClientApp extends Application {
      */
     public static void main (String[] args) {
         clientProviding = new ClientProviding( );
-        universalLocalizationModel = new UniversalLocalizationModel();
-        bundle = ResourceBundle.getBundle("Language");
+        universalLocalizationModel = new UniversalLocalizationModel( );
+        bundle = ResourceBundle.getBundle("languages.LanguageRU");
         launch(args);
     }
 
@@ -81,7 +83,7 @@ public class ClientApp extends Application {
         stage.show( );
     }
 
-    public void showMainWindow ( ) throws IOException {
+    public void showMainWindow (ResourceBundle bundle) throws IOException {
         InputStream stream = getClass( ).getResourceAsStream("fxmls/MainWindowCollection.fxml");
         FXMLLoader loader = new FXMLLoader( );
         TabPane tabPane = loader.load(stream);
@@ -91,10 +93,10 @@ public class ClientApp extends Application {
         MainWindowCollectionController mainWindowCollectionController = loader.getController( );
         MainWindowCollectionController mwcc = mainWindowCollectionController;
 
-        mwcc.setEverything(clientProviding, this, address, port, tabPane, universalLocalizationModel);
+        mwcc.setEverything(clientProviding, this, tabPane, universalLocalizationModel, bundle);
         loader.setController(mwcc);
         this.mainWindowCollectionController = mwcc;
-        clientProviding.setMainController(mwcc);
+        clientProviding.setMainController(this.mainWindowCollectionController);
 
         Stage stage = new Stage( );
         stage.setTitle("RouteApp");
@@ -103,13 +105,13 @@ public class ClientApp extends Application {
         stage.show( );
     }
 
-    public FXMLLoader showCommandResult ( ) throws IOException {
+    public FXMLLoader showCommandResult (ResourceBundle bundle) throws IOException {
         InputStream stream = getClass( ).getResourceAsStream("fxmls/CommandResult.fxml");
         FXMLLoader loader = new FXMLLoader( );
         BorderPane borderPane = loader.load(stream);
 
-        CommandResultController commandResultController = loader.getController();
-        commandResultController.setEverything(universalLocalizationModel);
+        CommandResultController commandResultController = loader.getController( );
+        commandResultController.setEverything(mainWindowCollectionController, universalLocalizationModel, bundle);
 
         Stage stage = new Stage( );
         stage.setTitle("CommandResult");
@@ -120,7 +122,7 @@ public class ClientApp extends Application {
         return loader;
     }
 
-    public FXMLLoader showEnterRoute ( ) throws IOException {
+    public FXMLLoader showEnterRoute (ResourceBundle bundle) throws IOException {
         InputStream stream = getClass( ).getResourceAsStream("fxmls/EnterRoute.fxml");
         FXMLLoader loader = new FXMLLoader( );
         VBox vBox = loader.load(stream);
@@ -128,9 +130,8 @@ public class ClientApp extends Application {
         EnterRouteController enterRouteController = loader.getController( );
         EnterRouteController erc = enterRouteController;
 
-        erc.setMainWindowCollectionController(mainWindowCollectionController);
 
-        erc.setEverything(clientProviding, this, universalLocalizationModel);
+        erc.setEverything(clientProviding, this, universalLocalizationModel, mainWindowCollectionController, bundle);
         loader.setController(erc);
 
         Stage stage = new Stage( );
@@ -143,12 +144,12 @@ public class ClientApp extends Application {
 
     }
 
-    public FXMLLoader showEnterDistance() throws IOException {
+    public FXMLLoader showEnterDistance ( ) throws IOException {
         InputStream stream = getClass( ).getResourceAsStream("fxmls/EnterDistance.fxml");
         FXMLLoader loader = new FXMLLoader( );
         BorderPane borderPane = loader.load(stream);
 
-        EnterDistanceController edc = loader.getController();
+        EnterDistanceController edc = loader.getController( );
         edc.setEverything(mainWindowCollectionController, universalLocalizationModel);
 
         Stage stage = new Stage( );
@@ -160,20 +161,20 @@ public class ClientApp extends Application {
         return loader;
     }
 
-    public FXMLLoader showEnterScript() throws IOException {
-        InputStream stream = getClass().getResourceAsStream("fxmls/EnterScript.fxml");
-        FXMLLoader loader = new FXMLLoader();
+    public FXMLLoader showEnterScript ( ) throws IOException {
+        InputStream stream = getClass( ).getResourceAsStream("fxmls/EnterScript.fxml");
+        FXMLLoader loader = new FXMLLoader( );
         BorderPane borderPane = loader.load(stream);
 
-        EnterScriptController esc = loader.getController();
+        EnterScriptController esc = loader.getController( );
         esc.setEverything(clientProviding, mainWindowCollectionController, universalLocalizationModel);
 
 
-        Stage stage = new Stage();
+        Stage stage = new Stage( );
         stage.setTitle("EnterScript");
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
-        stage.show();
+        stage.show( );
 
         return loader;
 

@@ -1,15 +1,20 @@
 package client.models;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 
-import java.util.ArrayList;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.io.CharArrayReader;
+import java.util.*;
 
 public class UniversalLocalizationModel {
 
+    private String normalResult;
+
+    public void setNormalResult (String normalResult) {
+        this.normalResult = normalResult;
+    }
 
     private void addAllDescendents (Parent parent, ArrayList<Node> nodes) {
         for (Node node : parent.getChildrenUnmodifiable( )) {
@@ -50,18 +55,42 @@ public class UniversalLocalizationModel {
 
                     }
                 }
-            } catch (NullPointerException | MissingResourceException  ex) {
+
+                if (node instanceof TextArea) {
+                    TextArea textArea = (TextArea) node;
+                    textArea.setText(translateMeAText(bundle));
+                }
+            } catch (NullPointerException | MissingResourceException ex) {
             }
         }
 
     }
 
-    public void updateLabels(Labeled labeled, String example, ResourceBundle bundle) {
+    public void updateLabels (Labeled labeled, String example, ResourceBundle bundle) {
         try {
             labeled.setText(bundle.getString(example));
         } catch (MissingResourceException | NullPointerException ex) {
-
         }
+    }
+
+    public String translateMeAText (ResourceBundle bundle) {
+        CharArrayReader car = new CharArrayReader(normalResult.toCharArray( ));
+        Scanner scanner = new Scanner(car);
+        String translateResult = "";
+        String finalResult = "";
+        while (scanner.hasNextLine( )) {
+            translateResult = scanner.nextLine( );
+            Set<String> keys = bundle.keySet( );
+            for (String key : keys) {
+                if (translateResult.contains(key)) {
+                    translateResult = translateResult.replaceAll(key, bundle.getString(key));
+                }
+            }
+
+            finalResult = finalResult + translateResult + "\n";
+        }
+
+        return finalResult;
     }
 
 }

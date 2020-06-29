@@ -63,7 +63,7 @@
       </VBox>
    </center>
    <top>
-      <MenuButton mnemonicParsing="false" text="MenuButton" BorderPane.alignment="TOP_RIGHT">
+      <MenuButton fx:id="language" mnemonicParsing="false" prefHeight="27.0" prefWidth="153.0" text="Выберите язык" BorderPane.alignment="TOP_RIGHT">
         <items>
             <MenuItem mnemonicParsing="false" onAction="#onActionRussian" text="Русский" />
           <MenuItem mnemonicParsing="false" onAction="#onActionEstlane" text="Eestlane" />

@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AuthenticationController">
    <center>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
@@ -29,7 +28,7 @@
                       <Insets left="50.0" right="50.0" />
                   </VBox.margin>
               </Label>
-              <Label fx:id="user" alignment="CENTER" contentDisplay="CENTER" prefHeight="62.0" prefWidth="551.0" text="Логин">
+              <Label fx:id="userr" alignment="CENTER" contentDisplay="CENTER" prefHeight="62.0" prefWidth="551.0" text="Логин">
                   <font>
                       <Font size="24.0" />
                   </font>
@@ -83,7 +82,7 @@
       </VBox>
    </center>
    <top>
-      <MenuButton mnemonicParsing="false" text="MenuButton" BorderPane.alignment="TOP_RIGHT">
+      <MenuButton fx:id="language" mnemonicParsing="false" prefHeight="27.0" prefWidth="160.0" text="Выберите язык" BorderPane.alignment="TOP_RIGHT">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#onActionRussian" text="Русский" />
           <MenuItem mnemonicParsing="false" onAction="#onActionEstlane" text="Eestlane" />

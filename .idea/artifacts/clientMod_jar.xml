@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="clientMod:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/clientMod_jar</output-path>
+    <root id="archive" name="clientMod.jar">
+      <element id="module-output" name="clientMod" />
+      <element id="module-output" name="commonMod" />
+    </root>
+  </artifact>
+</component>
