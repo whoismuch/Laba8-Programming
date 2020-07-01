@@ -746,22 +746,28 @@ public class MainWindowCollectionController {
 
     @FXML
     public void onActionDelete (ActionEvent actionEvent) throws IOException {
-        String result = mainWindowCollectionModel.removeByIdCommand(idField.getText( ));
-        editionResult.setText(result);
-        if (result.equals("Элемент удален!")) {
-            clearFields( );
-            setEdit(false);
+        editionResult.setText("");
+        if (toNameField.isEditable()) {
+            String result = mainWindowCollectionModel.removeByIdCommand(idField.getText( ));
+            editionResult.setText(result);
+            if (result.equals("Элемент удален!")) {
+                clearFields( );
+                setEdit(false);
+            }
         }
     }
 
     @FXML
     public void onActionEdit (ActionEvent actionEvent) throws IOException {
-        String result = enterRouteModel.checkRoute(nameField.getText( ), nowXField.getText( ), nowYField.getText( ), fromNameField.getText( ), fromXField.getText( ), fromYField.getText( ), toNameField.getText( ), toXField.getText( ), toYField.getText( ), distanceField.getText( ));
-        String result2 = "";
-        if (result.equals("Весьма симпатичный маршрут. Так держать")) {
-            result2 = mainWindowCollectionModel.updateIdCommand(idField.getText( ));
-            editionResult.setText(result2);
-        } else editionResult.setText(result);
+        editionResult.setText("");
+        if (toNameField.isEditable()) {
+            String result = enterRouteModel.checkRoute(nameField.getText( ), nowXField.getText( ), nowYField.getText( ), fromNameField.getText( ), fromXField.getText( ), fromYField.getText( ), toNameField.getText( ), toXField.getText( ), toYField.getText( ), distanceField.getText( ));
+            String result2 = "";
+            if (result.equals("Весьма симпатичный маршрут. Так держать")) {
+                result2 = mainWindowCollectionModel.updateIdCommand(idField.getText( ));
+                editionResult.setText(result2);
+            } else editionResult.setText(result);
+        }
     }
 
 
@@ -796,6 +802,7 @@ public class MainWindowCollectionController {
             }
             drawRoutes(routes);
             table.setItems(list);
+            clearFields();
         } catch (IllegalStateException ex) {
             ex.printStackTrace( );
         }
@@ -875,6 +882,7 @@ public class MainWindowCollectionController {
                 list.add(new FullRoute(route));
             }
             table.setItems(list);
+            clearFields();
 
         } catch (IllegalStateException ex) {
             ex.printStackTrace( );
@@ -899,6 +907,7 @@ public class MainWindowCollectionController {
         toNameField.clear( );
         toXField.clear( );
         toYField.clear( );
+        setEdit(false);
     }
 
     public void setEdit (boolean op) {

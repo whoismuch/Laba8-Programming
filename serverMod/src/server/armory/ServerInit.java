@@ -8,7 +8,7 @@ public class ServerInit {
     public static void main (String[] args) {
         try {
 
-            args = new String[]{"1374", "5432", "khumachbayramova", "kotenok2502"};
+            args = new String[]{"1373", "5432", "khumachbayramova", "kotenok2502"};
             ServerApp serverApp = new ServerApp( );
             serverApp.beginTheParty(args[0], args[1], args[2], args[3]);
 
