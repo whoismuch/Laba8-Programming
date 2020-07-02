@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
@@ -160,7 +161,11 @@
                   </HBox>
                   <HBox prefHeight="316.0" prefWidth="924.0">
                      <children>
-                        <Canvas fx:id="canvas" height="350.0" onMouseClicked="#onActionMouseClicked" width="350.0" />
+                        <Group onMouseClicked="#onActionMouseClicked">
+                           <children>
+                              <Canvas fx:id="canvas" height="350.0" onMouseClicked="#onActionMouseClicked" width="350.0" />
+                           </children>
+                        </Group>
                         <VBox>
                            <HBox.margin>
                               <Insets />

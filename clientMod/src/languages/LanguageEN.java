@@ -114,7 +114,12 @@ public class LanguageEN extends ListResourceBundle {
             {"Все супер", "Everything is super"},
             {"Недостаточно прав для чтения скрипта", "Not enough rights to read the script"},
             {"Файла со скриптом по указанному пути не существует", "A file with a script on the specified path does not exist"},
-            {"Файл пуст!", "File is empty!"}
+            {"Файл пуст!", "File is empty!"},
+
+            {"ownerF", "Owner"},
+            {"creationDateF", "Creation Date"},
+            {"delete", "Delete"},
+            {"edit", "Edit"}
 
     };
 

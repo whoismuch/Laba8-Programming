@@ -115,7 +115,12 @@ public class LanguageEST extends ListResourceBundle {
             {"Все супер", "Kõik on super"},
             {"Недостаточно прав для чтения скрипта", "Skripti lugemiseks pole piisavalt õigusi"},
             {"Файла со скриптом по указанному пути не существует", "Määratud tee skriptiga faili pole olemas"},
-            {"Файл пуст!", "Fail on tühi!"}
+            {"Файл пуст!", "Fail on tühi!"},
+
+            {"ownerF", "Omanik"},
+            {"creationDateF", "Loomise kuupäev"},
+            {"delete", "Kustuta"},
+            {"edit", "Redigeeri"}
 
     };
 }

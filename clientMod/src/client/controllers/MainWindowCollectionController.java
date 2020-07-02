@@ -8,6 +8,9 @@ import client.models.MainWindowCollectionModel;
 import client.models.UniversalLocalizationModel;
 import com.sun.webkit.dom.KeyboardEventImpl;
 import common.generatedClasses.Route;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,8 +18,10 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -27,8 +32,12 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 import sun.nio.cs.ext.MacThai;
 
 import java.io.IOException;
@@ -160,6 +169,17 @@ public class MainWindowCollectionController {
 
     private double gran;
 
+    private HashMap<Long, Group> pictureFrom;
+    private HashMap<Long, Group> pictureTo;
+    private int i = 0;
+    private Timeline timeline;
+    private boolean finish = true;
+    private double a;
+    private double b;
+    private Timeline timeline1;
+    private LinkedHashSet<Route> routes;
+    private String edResult = "";
+
 
     @FXML
     private void initialize ( ) throws IOException {
@@ -177,6 +197,9 @@ public class MainWindowCollectionController {
         toX.setCellValueFactory(new PropertyValueFactory<FullRoute, Long>("toX"));
         toY.setCellValueFactory(new PropertyValueFactory<FullRoute, Long>("toY"));
         Ddistance.setCellValueFactory(new PropertyValueFactory<FullRoute, Float>("distance"));
+
+        pictureFrom = new HashMap<>( );
+        pictureTo = new HashMap<>( );
 
 
         forFilter.textProperty( ).addListener((observable, oldValue, newValue) -> { // filter_area - текствое поле , куда ты будешь вводить текст дл€ фильтрации
@@ -294,6 +317,7 @@ public class MainWindowCollectionController {
     public void onActionMouseClicked (MouseEvent mouseEvent) {
         setEdit(true);
         editionResult.setText("");
+        edResult = "";
         double x = mouseEvent.getX( );
         double y = mouseEvent.getY( );
         for (Route route : clientProviding.getRoutes( )) {
@@ -314,6 +338,7 @@ public class MainWindowCollectionController {
                 idField.setEditable(false);
                 ownerField.setEditable(false);
                 creationDateField.setEditable(false);
+
             }
         }
 
@@ -703,7 +728,7 @@ public class MainWindowCollectionController {
     public void onActionRussian (ActionEvent actionEvent) throws UnsupportedEncodingException {
         bundle = ResourceBundle.getBundle("languages.LanguageRU");
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
-
+        universalLocalizationModel.updateLabels(editionResult, edResult, bundle);
         if (commandResultController != null) commandResultController.translate(bundle);
         if (enterRouteController != null) enterRouteController.translate(bundle);
         if (enterDistanceController != null) enterDistanceController.translate(bundle);
@@ -714,6 +739,7 @@ public class MainWindowCollectionController {
     public void onActionEstlane (ActionEvent actionEvent) {
         bundle = ResourceBundle.getBundle("languages.LanguageEST", new Locale("est", "EST"));
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
+        universalLocalizationModel.updateLabels(editionResult, edResult, bundle);
         if (commandResultController != null) commandResultController.translate(bundle);
         if (enterRouteController != null) enterRouteController.translate(bundle);
         if (enterDistanceController != null) enterDistanceController.translate(bundle);
@@ -726,6 +752,7 @@ public class MainWindowCollectionController {
     public void onActionCatala (ActionEvent actionEvent) {
         bundle = ResourceBundle.getBundle("languages.LanguageCAT", new Locale("cat", "CAT"));
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
+        universalLocalizationModel.updateLabels(editionResult, edResult, bundle);
         if (commandResultController != null) commandResultController.translate(bundle);
         if (enterRouteController != null) enterRouteController.translate(bundle);
         if (enterDistanceController != null) enterDistanceController.translate(bundle);
@@ -737,6 +764,7 @@ public class MainWindowCollectionController {
     public void onActionEnglish (ActionEvent actionEvent) {
         bundle = ResourceBundle.getBundle("languages.LanguageEN", new Locale("en", "ZA"));
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
+        universalLocalizationModel.updateLabels(editionResult, edResult, bundle);
         if (commandResultController != null) commandResultController.translate(bundle);
         if (enterRouteController != null) enterRouteController.translate(bundle);
         if (enterDistanceController != null) enterDistanceController.translate(bundle);
@@ -747,10 +775,11 @@ public class MainWindowCollectionController {
     @FXML
     public void onActionDelete (ActionEvent actionEvent) throws IOException {
         editionResult.setText("");
-        if (toNameField.isEditable()) {
-            String result = mainWindowCollectionModel.removeByIdCommand(idField.getText( ));
-            editionResult.setText(result);
-            if (result.equals("Элемент удален!")) {
+        edResult = "";
+        if (toNameField.isEditable( )) {
+            edResult = mainWindowCollectionModel.removeByIdCommand(idField.getText( ));
+            editionResult.setText(bundle.getString(edResult));
+            if (edResult.equals("Элемент удален!")) {
                 clearFields( );
                 setEdit(false);
             }
@@ -760,12 +789,13 @@ public class MainWindowCollectionController {
     @FXML
     public void onActionEdit (ActionEvent actionEvent) throws IOException {
         editionResult.setText("");
-        if (toNameField.isEditable()) {
+        edResult = "";
+        if (toNameField.isEditable( )) {
             String result = enterRouteModel.checkRoute(nameField.getText( ), nowXField.getText( ), nowYField.getText( ), fromNameField.getText( ), fromXField.getText( ), fromYField.getText( ), toNameField.getText( ), toXField.getText( ), toYField.getText( ), distanceField.getText( ));
-            String result2 = "";
+
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
-                result2 = mainWindowCollectionModel.updateIdCommand(idField.getText( ));
-                editionResult.setText(result2);
+                edResult = mainWindowCollectionModel.updateIdCommand(idField.getText( ));
+                editionResult.setText(bundle.getString(edResult));
             } else editionResult.setText(result);
         }
     }
@@ -802,14 +832,15 @@ public class MainWindowCollectionController {
             }
             drawRoutes(routes);
             table.setItems(list);
-            clearFields();
-        } catch (IllegalStateException ex) {
+            clearFields( );
+        } catch (IllegalStateException | InterruptedException ex) {
             ex.printStackTrace( );
         }
 
     }
 
-    public void drawRoutes (LinkedHashSet<Route> routes) {
+    public void drawRoutes (LinkedHashSet<Route> routes) throws InterruptedException {
+
         HashMap<String, Color> colors = getColors(routes);
         if (gc != null) gc.clearRect(0, 0, canvas.getWidth( ), canvas.getHeight( ));
 
@@ -834,7 +865,10 @@ public class MainWindowCollectionController {
         gc.fillOval(canvas.getWidth( ) / 2.0 - 2.5, canvas.getHeight( ) / 2.0 + gran - 2, 5, 5);
         gc.fillOval(canvas.getWidth( ) / 2.0 - 2.5, canvas.getHeight( ) / 2.0 - gran - 7, 5, 5);
 
+        Group group = (Group) canvas.getParent( );
+        Group fromGroup = new Group( );
 
+        Group toGroup = new Group( );
 
         for (Route route : routes) {
 
@@ -859,8 +893,94 @@ public class MainWindowCollectionController {
             gc.setFill(javafx.scene.paint.Color.WHITE);
             gc.fillOval(canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale - 10, (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale) - 45, 20, 20);
             gc.setFill(Color.BLACK);
+//
+//            if (!pictureFrom.containsKey(route.getId( ))) {
+//                if (!group.getChildren( ).contains(fromGroup)) group.getChildren( ).add(fromGroup);
+//                if (!group.getChildren( ).contains(toGroup)) group.getChildren( ).add(toGroup);
+//            }
+//
+//            gc.beginPath( );
+//            gc.moveTo((canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale), (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale));
+//            gc.quadraticCurveTo((canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale), ((canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) + (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale)) / 2.0 - gran / 6, canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale, (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale));
+//            gc.setStroke(colors.get(route.getUsername( )));
+//            gc.stroke( );
+//            gc.closePath( );
+//            gc.setStroke(Color.BLACK);
+//
+//            Circle circle = new Circle((canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale), (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - 35, 15);
+//            circle.setFill(colors.get(route.getUsername( )));
+//            Polygon polygon = new Polygon( );
+//            polygon.getPoints( ).addAll(new Double[]{
+//                    canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale - 15, (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - 32,
+//                    canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale, (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale),
+//                    canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale + 15, (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - 32});
+//            polygon.setFill(colors.get(route.getUsername( )));
+//            Circle smallCircle = new Circle((canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale), (canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - 35, 10);
+//            smallCircle.setFill(Color.WHITE);
+//
+//            fromGroup.getChildren( ).add(polygon);
+//            fromGroup.getChildren( ).add(circle);
+//            fromGroup.getChildren( ).add(smallCircle);
+//
+//            double xFrNow = 0;
+//            double yFrNow = 0;
+//            for (Node node : fromGroup.getChildren( )) {
+//                if (node instanceof Circle) {
+//                    xFrNow = ((Circle) node).getCenterX( );
+//                    yFrNow = ((Circle) node).getCenterY( ) + 35;
+//                }
+//            }
+//
+//            Circle circle2 = new Circle((canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale), (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale) - 35, 15);
+//            circle2.setFill(colors.get(route.getUsername( )));
+//            Polygon polygon2 = new Polygon( );
+//            polygon2.getPoints( ).addAll(new Double[]{
+//                    canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale - 15, (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale) - 32,
+//                    canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale, (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale),
+//                    canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale + 15, (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale) - 32});
+//            polygon2.setFill(colors.get(route.getUsername( )));
+//            Circle smallCircle2 = new Circle((canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale), (canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale) - 35, 10);
+//            smallCircle2.setFill(Color.WHITE);
+//
+//
+//            toGroup.getChildren( ).add(polygon2);
+//            toGroup.getChildren( ).add(circle2);
+//            toGroup.getChildren( ).add(smallCircle2);
+//
+//
+//            if (pictureFrom.containsKey(route.getId( ))) {
+//
+//                double xFr = 0;
+//                double yFr = 0;
+//
+//                Group groupFr = pictureFrom.get(route.getId( ));
+//                for (Node node : groupFr.getChildren( )) {
+//                    if (node instanceof Circle) {
+//                        xFr = ((Circle) node).getCenterX( );
+//                        yFr = ((Circle) node).getCenterY( ) + 35;
+//                    }
+//                }
+//
+//                a = xFr - xFrNow;
+//                b = yFr - yFrNow;
+//
+//
+//                System.out.println(a + " " + b );
+//
+//                if (a!=0 || b!=0) {
+//                    AnimationMove animationMove = new AnimationMove(pictureFrom.get(route.getId( )), a, b, xFr, yFr);
+//                    animationMove.playAnim( );
+//                }
+//
+//                pictureFrom.replace(route.getId( ), fromGroup);
+//            } else {
+//                pictureFrom.put(route.getId( ), fromGroup);
+//            }
+
+
         }
     }
+
 
     public HashMap<String, Color> getColors (LinkedHashSet<Route> routes) {
         HashMap<String, Color> map = new HashMap<>( );
@@ -882,7 +1002,7 @@ public class MainWindowCollectionController {
                 list.add(new FullRoute(route));
             }
             table.setItems(list);
-            clearFields();
+            clearFields( );
 
         } catch (IllegalStateException ex) {
             ex.printStackTrace( );

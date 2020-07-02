@@ -26,7 +26,7 @@ public class LanguageCAT extends ListResourceBundle {
             {"language1", "Seleccioneu un idioma"},
             {"graphics", "Gràfics"},
             {"collection", "Col · lecció"},
-            {"owner", "Owner"},
+            {"owner", "Propietari"},
             {"name", "Name Route"},
             {"id", "id"},
             {"coordinateX", "X actual"},
@@ -114,7 +114,14 @@ public class LanguageCAT extends ListResourceBundle {
             {"Все супер", "Tot és super"},
             {"Недостаточно прав для чтения скрипта", "No hi ha prou drets per llegir el guió"},
             {"Файла со скриптом по указанному пути не существует", "No existeix un fitxer amb un script a la ruta especificada"},
-            {"Файл пуст!", "El fitxer és buit!"}
+            {"Файл пуст!", "El fitxer és buit!"},
+
+            {"ownerF", "Propietari"},
+            {"creationDateF", "Data de creació"},
+            {"delete", "Suprimeix"},
+            {"edit", "Edita"}
+
+
 
     };
 
