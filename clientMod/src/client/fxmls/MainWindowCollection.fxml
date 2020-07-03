@@ -63,7 +63,7 @@
                               <TableColumn fx:id="name" prefWidth="66.0" text="Название маршрута" />
                             <TableColumn fx:id="coordinateX" prefWidth="48.0" text="Now X" />
                               <TableColumn fx:id="coordinateY" prefWidth="55.0" text="Now Y" />
-                              <TableColumn fx:id="creationDate" prefWidth="134.0" text="Дата Создания" />
+                              <TableColumn fx:id="date" prefWidth="134.0" text="Дата Создания" />
                               <TableColumn fx:id="fromName" prefWidth="86.0" text="From Name" />
                               <TableColumn fx:id="fromX" prefWidth="51.0" text="From X" />
                               <TableColumn fx:id="fromY" prefWidth="54.0" text="From Y" />

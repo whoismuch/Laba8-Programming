@@ -31,7 +31,7 @@ public class LanguageEN extends ListResourceBundle {
             {"name", "Route Name"},
             {"coordinateX", "Current X"},
             {"coordinateY", "Current Y"},
-            {"creationDate", "Creation Date"},
+            {"date", "Creation Date"},
             {"fromName", "Shipment Name"},
             {"fromX", "Departure X"},
             {"fromY", "Departure Y"},

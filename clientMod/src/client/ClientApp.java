@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ClientApp extends Application {
@@ -63,7 +64,7 @@ public class ClientApp extends Application {
         primaryStage.show( );
     }
 
-    public void showAthorization (String address, String port, ResourceBundle bundle) throws IOException {
+    public void showAthorization (String address, String port, ResourceBundle bundle, Locale locale) throws IOException {
 
         this.address = address;
         this.port = port;
@@ -74,7 +75,7 @@ public class ClientApp extends Application {
 
         AuthenticationController authenticationController = loader.getController( );
         AuthenticationController ac = authenticationController;
-        ac.setEverything(clientProviding, this, universalLocalizationModel, bundle);
+        ac.setEverything(clientProviding, this, universalLocalizationModel, bundle, locale);
         loader.setController(ac);
 
         Stage stage = new Stage( );
@@ -84,7 +85,7 @@ public class ClientApp extends Application {
         stage.show( );
     }
 
-    public void showMainWindow (ResourceBundle bundle) throws IOException {
+    public void showMainWindow (ResourceBundle bundle, Locale locale) throws IOException {
         InputStream stream = getClass( ).getResourceAsStream("fxmls/MainWindowCollection.fxml");
         FXMLLoader loader = new FXMLLoader( );
         TabPane tabPane = loader.load(stream);
@@ -94,7 +95,7 @@ public class ClientApp extends Application {
         MainWindowCollectionController mainWindowCollectionController = loader.getController( );
         MainWindowCollectionController mwcc = mainWindowCollectionController;
 
-        mwcc.setEverything(clientProviding, this, tabPane, universalLocalizationModel, bundle);
+        mwcc.setEverything(clientProviding, this, tabPane, universalLocalizationModel, bundle, locale);
         loader.setController(mwcc);
         this.mainWindowCollectionController = mwcc;
         clientProviding.setMainController(this.mainWindowCollectionController);

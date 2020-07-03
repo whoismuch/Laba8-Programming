@@ -4,9 +4,16 @@ import common.generatedClasses.Coordinates;
 import common.generatedClasses.Location;
 import common.generatedClasses.Route;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.*;
 
-public class FullRoute{
+public class FullRoute {
 
     private String name; //Поле не может быть null, Строка не может быть пустой
     /**
@@ -50,20 +57,37 @@ public class FullRoute{
 
     private String username;
 
-    public FullRoute (Route route) {
-        id = route.getId();
-        username = route.getUsername();
-        name = route.getName();
-        coordinateX = route.getCoordinates().getX();
-        coordinateY = route.getCoordinates().getY();
-        creationDate = route.getCreationDate();
-        fromName = route.getFrom().getName();
-        fromX = route.getFrom().getX();
-        fromY = route.getFrom().getY();
-        toName = route.getTo().getName();
-        toX = route.getTo().getX();
-        toY = route.getTo().getY();
-        distance = route.getDistance();
+    private String date;
+
+    public void setDate (String date) {
+        this.date = date;
+    }
+
+    public String getDate ( ) {
+        return date;
+    }
+
+    public FullRoute (Route route, Locale locale) {
+        id = route.getId( );
+        username = route.getUsername( );
+        name = route.getName( );
+        coordinateX = route.getCoordinates( ).getX( );
+        coordinateY = route.getCoordinates( ).getY( );
+        creationDate = route.getCreationDate( );
+
+        Date date1 = Date.from(creationDate.toInstant());
+        DateFormat ffInstance = DateFormat.getDateTimeInstance(
+                DateFormat.FULL, DateFormat.MEDIUM, locale);
+
+        date = ffInstance.format(date1);
+
+        fromName = route.getFrom( ).getName( );
+        fromX = route.getFrom( ).getX( );
+        fromY = route.getFrom( ).getY( );
+        toName = route.getTo( ).getName( );
+        toX = route.getTo( ).getX( );
+        toY = route.getTo( ).getY( );
+        distance = route.getDistance( );
     }
 
     public String getName ( ) {

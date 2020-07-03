@@ -2,7 +2,7 @@ package languages;
 
 import java.util.ListResourceBundle;
 
-public class LanguageCAT extends ListResourceBundle {
+public class LanguageCA extends ListResourceBundle {
     @Override
     public Object[][] getContents ( ) {
         return contents;
@@ -31,7 +31,7 @@ public class LanguageCAT extends ListResourceBundle {
             {"id", "id"},
             {"coordinateX", "X actual"},
             {"coordinateY", "Y actual"},
-            {"creationDate", "Data de creació"},
+            {"date", "Data de creació"},
             {"fromName", "Nom de l'enviament"},
             {"fromX", "Sortida X"},
             {"fromY", "Depart Y"},

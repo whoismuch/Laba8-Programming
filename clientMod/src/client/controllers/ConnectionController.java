@@ -49,6 +49,7 @@ public class ConnectionController {
 
     @FXML
     private Label enterPort;
+    private Locale locale;
 
     @FXML
     public void onActionConnection (ActionEvent event) throws InterruptedException {
@@ -59,13 +60,14 @@ public class ConnectionController {
             connectionResult.setText(bundle.getString(result));
 
             nextStep(result);
-        }  catch (IOException ex) {
+        } catch (IOException ex) {
             connectionResult.setText(bundle.getString(LanguageRU.serverIsNotAv));
         }
     }
 
     @FXML
     public void onActionRussian (ActionEvent actionEvent) throws UnsupportedEncodingException {
+        locale = new Locale("ru", "RU");
         bundle = ResourceBundle.getBundle("languages.LanguageRU");
         universalLocalizationModel.changeLanguage(connectionResult.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(connectionResult, result, bundle);
@@ -73,7 +75,8 @@ public class ConnectionController {
 
     @FXML
     public void onActionEstlane (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("languages.LanguageEST", new Locale("est", "EST"));
+        locale = new Locale("et", "EE");
+        bundle = ResourceBundle.getBundle("languages.LanguageET", locale);
         universalLocalizationModel.changeLanguage(connectionResult.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(connectionResult, result, bundle);
 
@@ -81,14 +84,16 @@ public class ConnectionController {
 
     @FXML
     public void onActionCatala (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("languages.LanguageCAT", new Locale("cat", "CAT"));
+        locale = new Locale("ca", "ES");
+        bundle = ResourceBundle.getBundle("languages.LanguageCA", locale);
         universalLocalizationModel.changeLanguage(connectionResult.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(connectionResult, result, bundle);
     }
 
     @FXML
     public void onActionEnglish (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("languages.LanguageEN", new Locale("en", "ZA"));
+        locale = new Locale("en", "ZA");
+        bundle = ResourceBundle.getBundle("languages.LanguageEN", locale);
         universalLocalizationModel.changeLanguage(connectionResult.getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(connectionResult, result, bundle);
     }
@@ -105,7 +110,7 @@ public class ConnectionController {
                     Stage stage = (Stage) buttonConnect.getScene( ).getWindow( );
                     stage.close( );
                     try {
-                        clientApp.showAthorization(address, port, bundle);
+                        clientApp.showAthorization(address, port, bundle, locale);
                     } catch (IOException e) {
                         e.printStackTrace( );
                     }
@@ -123,7 +128,9 @@ public class ConnectionController {
         this.universalLocalizationModel = universalLocalizationModel;
         connectionModel = new ConnectionModel(clientProviding);
         this.bundle = bundle;
-        universalLocalizationModel.changeLanguage(connectionResult.getParent().getParent(), bundle);
+        universalLocalizationModel.changeLanguage(connectionResult.getParent( ).getParent( ), bundle);
+
+        locale = new Locale("ru", "RU");
     }
 
 

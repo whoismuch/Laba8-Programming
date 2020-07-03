@@ -37,7 +37,7 @@ public class LanguageRU extends ListResourceBundle {
             {"name", "Название маршрута"},
             {"coordinateX", "Текущий X"},
             {"coordinateY", "Текущий Y"},
-            {"creationDate", "Дата создания"},
+            {"date", "Дата создания"},
             {"fromName", "Название отправления"},
             {"fromX", "Отправление X"},
             {"fromY", "Отправление Y"},

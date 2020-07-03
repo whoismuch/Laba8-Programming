@@ -6,7 +6,6 @@ import client.models.ClientProviding;
 import client.models.EnterRouteModel;
 import client.models.MainWindowCollectionModel;
 import client.models.UniversalLocalizationModel;
-import common.generatedClasses.Coordinates;
 import common.generatedClasses.Route;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -16,7 +15,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -26,13 +24,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.time.ZonedDateTime;
 import java.util.*;
 
 public class MainWindowCollectionController {
@@ -71,7 +66,7 @@ public class MainWindowCollectionController {
     private TableColumn<FullRoute, Integer> coordinateY;
 
     @FXML
-    private TableColumn<FullRoute, ZonedDateTime> creationDate;
+    private TableColumn<FullRoute, String> date;
 
     @FXML
     private TableColumn<FullRoute, String> fromName;
@@ -179,6 +174,7 @@ public class MainWindowCollectionController {
     private EnterEverythingController enterEverythingController;
     private String kostil;
     private String tableEdResult;
+    private Locale locale;
 
 
     @FXML
@@ -189,7 +185,7 @@ public class MainWindowCollectionController {
         name.setCellValueFactory(new PropertyValueFactory<FullRoute, String>("name"));
         coordinateX.setCellValueFactory(new PropertyValueFactory<FullRoute, Long>("coordinateX"));
         coordinateY.setCellValueFactory(new PropertyValueFactory<FullRoute, Integer>("coordinateY"));
-        creationDate.setCellValueFactory(new PropertyValueFactory<FullRoute, ZonedDateTime>("creationDate"));
+        date.setCellValueFactory(new PropertyValueFactory<FullRoute, String>("date"));
         fromName.setCellValueFactory(new PropertyValueFactory<FullRoute, String>("fromName"));
         fromX.setCellValueFactory(new PropertyValueFactory<FullRoute, Long>("fromX"));
         fromY.setCellValueFactory(new PropertyValueFactory<FullRoute, Long>("fromY"));
@@ -317,10 +313,10 @@ public class MainWindowCollectionController {
     public void onTableClicked (MouseEvent mouseEvent) {
         if (mouseEvent.getButton( ) == MouseButton.SECONDARY) {
             contextMenu.show(table, mouseEvent.getScreenX( ), mouseEvent.getScreenY( ));
-            MenuItem menuItem = contextMenu.getItems().get(0);
-            MenuItem menuItem1 = contextMenu.getItems().get(1);
-            menuItem.setText(universalLocalizationModel.translateMeAText(bundle, menuItem.getId()));
-            menuItem1.setText(universalLocalizationModel.translateMeAText(bundle, menuItem1.getId()));
+            MenuItem menuItem = contextMenu.getItems( ).get(0);
+            MenuItem menuItem1 = contextMenu.getItems( ).get(1);
+            menuItem.setText(universalLocalizationModel.translateMeAText(bundle, menuItem.getId( )));
+            menuItem1.setText(universalLocalizationModel.translateMeAText(bundle, menuItem1.getId( )));
         }
     }
 
@@ -329,7 +325,7 @@ public class MainWindowCollectionController {
         ObservableList<TablePosition> observableList = table.getSelectionModel( ).getSelectedCells( );
         for (TablePosition tablePosition : observableList) {
             kostil = tablePosition.getTableColumn( ).getId( );
-            if (!kostil.equals("id") && !kostil.equals("owner") && !kostil.equals("creationDate")) {
+            if (!kostil.equals("id") && !kostil.equals("owner") && !kostil.equals("date")) {
                 if (enterRouteController != null) {
                     Stage stage = (Stage) enterRouteController.getNameField( ).getScene( ).getWindow( );
                     stage.close( );
@@ -368,16 +364,17 @@ public class MainWindowCollectionController {
 
     @FXML
     public void onActionMouseClicked (MouseEvent mouseEvent) {
-        setEdit(true);
         editionResult.setText("");
         edResult = "";
+        clearFields();
+        setEdit(true);
         double x = mouseEvent.getX( );
         double y = mouseEvent.getY( );
         for (Route route : clientProviding.getRoutes( )) {
             if (Math.abs(x - (canvas.getWidth( ) / 2.0 + (route.getFrom( ).getX( )) * (gran) / scale)) < 15 && (((canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - y) < 50 && ((canvas.getHeight( ) / 2.0 - (route.getFrom( ).getY( )) * gran / scale) - y) > 0) || Math.abs((x - (canvas.getWidth( ) / 2.0 + (route.getTo( ).getX( )) * (gran) / scale))) < 15 && ((canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale) - y < 50 && canvas.getHeight( ) / 2.0 - (route.getTo( ).getY( )) * gran / scale - y > 0)) {
                 idField.setText(route.getId( ).toString( ));
                 ownerField.setText(route.getUsername( ));
-                creationDateField.setText(route.getCreationDate( ).toString( ));
+                creationDateField.setText(mainWindowCollectionModel.localizeDate(locale, route.getCreationDate()));
                 distanceField.setText(route.getDistance( ).toString( ));
                 nameField.setText(route.getName( ));
                 nowXField.setText(route.getCoordinates( ).getX( ).toString( ));
@@ -614,7 +611,6 @@ public class MainWindowCollectionController {
                 stage.close( );
             }
         } else openEnterRoute( );
-
 
     }
 
@@ -862,11 +858,13 @@ public class MainWindowCollectionController {
 
 
     @FXML
-    public void onActionRussian (ActionEvent actionEvent) throws UnsupportedEncodingException {
+    public void onActionRussian (ActionEvent actionEvent) throws IOException {
+        locale = new Locale("ru", "RU");
         bundle = ResourceBundle.getBundle("languages.LanguageRU");
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(editionResult, edResult, bundle);
         universalLocalizationModel.updateLabels(tableEditionResult, tableEdResult, bundle);
+        setColumns(clientProviding.getRoutes( ));
         if (commandResultController != null) commandResultController.translate(bundle);
         if (enterRouteController != null) enterRouteController.translate(bundle);
         if (enterDistanceController != null) enterDistanceController.translate(bundle);
@@ -874,11 +872,13 @@ public class MainWindowCollectionController {
     }
 
     @FXML
-    public void onActionEstlane (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("languages.LanguageEST", new Locale("est", "EST"));
+    public void onActionEstlane (ActionEvent actionEvent) throws IOException {
+        locale = new Locale("et", "EE");
+        bundle = ResourceBundle.getBundle("languages.LanguageET", locale);
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(editionResult, edResult, bundle);
         universalLocalizationModel.updateLabels(tableEditionResult, tableEdResult, bundle);
+        setColumns(clientProviding.getRoutes( ));
         if (commandResultController != null) commandResultController.translate(bundle);
         if (enterRouteController != null) enterRouteController.translate(bundle);
         if (enterDistanceController != null) enterDistanceController.translate(bundle);
@@ -888,11 +888,13 @@ public class MainWindowCollectionController {
     }
 
     @FXML
-    public void onActionCatala (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("languages.LanguageCAT", new Locale("cat", "CAT"));
+    public void onActionCatala (ActionEvent actionEvent) throws IOException {
+        locale = new Locale("ca", "ES");
+        bundle = ResourceBundle.getBundle("languages.LanguageCA", locale);
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(editionResult, edResult, bundle);
         universalLocalizationModel.updateLabels(tableEditionResult, tableEdResult, bundle);
+        setColumns(clientProviding.getRoutes( ));
         if (commandResultController != null) commandResultController.translate(bundle);
         if (enterRouteController != null) enterRouteController.translate(bundle);
         if (enterDistanceController != null) enterDistanceController.translate(bundle);
@@ -901,11 +903,13 @@ public class MainWindowCollectionController {
     }
 
     @FXML
-    public void onActionEnglish (ActionEvent actionEvent) {
-        bundle = ResourceBundle.getBundle("languages.LanguageEN", new Locale("en", "ZA"));
+    public void onActionEnglish (ActionEvent actionEvent) throws IOException {
+        locale = new Locale("en", "ZA");
+        bundle = ResourceBundle.getBundle("languages.LanguageEN", locale);
         universalLocalizationModel.changeLanguage(username.getParent( ).getParent( ).getParent( ).getParent( ), bundle);
         universalLocalizationModel.updateLabels(editionResult, edResult, bundle);
         universalLocalizationModel.updateLabels(tableEditionResult, tableEdResult, bundle);
+        setColumns(clientProviding.getRoutes( ));
         if (commandResultController != null) commandResultController.translate(bundle);
         if (enterRouteController != null) enterRouteController.translate(bundle);
         if (enterDistanceController != null) enterDistanceController.translate(bundle);
@@ -942,7 +946,7 @@ public class MainWindowCollectionController {
     }
 
 
-    public void setEverything (ClientProviding clientProviding, ClientApp clientApp, TabPane tabPane, UniversalLocalizationModel universalLocalizationModel, ResourceBundle bundle) throws IOException {
+    public void setEverything (ClientProviding clientProviding, ClientApp clientApp, TabPane tabPane, UniversalLocalizationModel universalLocalizationModel, ResourceBundle bundle, Locale locale) throws IOException {
         this.clientProviding = clientProviding;
         this.clientApp = clientApp;
         this.tabPane = tabPane;
@@ -953,6 +957,7 @@ public class MainWindowCollectionController {
 
         clientProviding.getClientNotifying( ).setMainWindowCollectionController(this);
 
+        this.locale = locale;
         routess = clientProviding.getRoutes( );
 
 //        setColumns(clientProviding.getRoutes( ));
@@ -971,7 +976,7 @@ public class MainWindowCollectionController {
         try {
             ObservableList<FullRoute> list = FXCollections.observableArrayList( );
             for (Route route : routes) {
-                list.add(new FullRoute(route));
+                list.add(new FullRoute(route, locale));
             }
 
 //            System.out.println("routess" );
@@ -980,11 +985,9 @@ public class MainWindowCollectionController {
 //            System.out.println(clientProviding.getRoutes());
 //            for (int i )
 
-            if (!routess.equals(clientProviding.getRoutes( ))) {
-                drawRoutes(routes);
-                table.setItems(list);
-                routess = clientProviding.getRoutes( );
-            }
+            drawRoutes(routes);
+            table.setItems(list);
+            routess = clientProviding.getRoutes( );
 
             clearFields( );
         } catch (IllegalStateException | InterruptedException ex) {
@@ -1155,7 +1158,7 @@ public class MainWindowCollectionController {
         try {
             ObservableList<FullRoute> list = FXCollections.observableArrayList( );
             for (Route route : listRoutes) {
-                list.add(new FullRoute(route));
+                list.add(new FullRoute(route, locale));
             }
             table.setItems(list);
             clearFields( );
@@ -1209,8 +1212,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         if (kostil.equals("coordinateX")) {
@@ -1218,8 +1220,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         if (kostil.equals("coordinateY")) {
@@ -1227,8 +1228,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         if (kostil.equals("fromName")) {
@@ -1236,8 +1236,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         if (kostil.equals("fromX")) {
@@ -1245,8 +1244,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         if (kostil.equals("fromY")) {
@@ -1254,8 +1252,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         if (kostil.equals("toName")) {
@@ -1263,8 +1260,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         if (kostil.equals("toX")) {
@@ -1272,8 +1268,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         if (kostil.equals("toY")) {
@@ -1281,8 +1276,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         if (kostil.equals("distance")) {
@@ -1290,8 +1284,7 @@ public class MainWindowCollectionController {
             if (result.equals("Весьма симпатичный маршрут. Так держать")) {
                 tableEdResult = mainWindowCollectionModel.updateIdCommand(fullRoute.getId( ).toString( ));
                 tableEditionResult.setText(bundle.getString(tableEdResult));
-            }
-            else tableEditionResult.setText(bundle.getString(result));
+            } else tableEditionResult.setText(bundle.getString(result));
         }
 
         Stage stage = (Stage) enterEverythingController.getTfEdit( ).getScene( ).getWindow( );

@@ -2,7 +2,7 @@ package languages;
 
 import java.util.ListResourceBundle;
 
-public class LanguageEST extends ListResourceBundle {
+public class LanguageET extends ListResourceBundle {
     @Override
     public Object[][] getContents ( ) {
         return contents;
@@ -31,7 +31,7 @@ public class LanguageEST extends ListResourceBundle {
             {"name", "Marsruudi nimi"},
             {"coordinateX", "Praegune X"},
             {"coordinateY", "Praegune Y"},
-            {"creationDate", "Loomise kuupäev"},
+            {"date", "Loomise kuupäev"},
             {"fromName", "Saadetise nimi"},
             {"fromX", "Departure X"},
             {"fromY", "Departure Y"},

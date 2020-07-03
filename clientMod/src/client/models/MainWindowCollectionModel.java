@@ -9,9 +9,9 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedHashSet;
+import java.text.DateFormat;
+import java.time.ZonedDateTime;
+import java.util.*;
 import java.util.List;
 
 public class MainWindowCollectionModel {
@@ -98,6 +98,14 @@ public class MainWindowCollectionModel {
     public Route convertRoute(FullRoute fullRoute) {
         Route route = new Route(fullRoute.getName(), fullRoute.getId(), new Coordinates(fullRoute.getCoordinateX(), fullRoute.getCoordinateY()), fullRoute.getCreationDate(), new Location(fullRoute.getFromName(), fullRoute.getFromX(), fullRoute.getFromY()), new Location(fullRoute.getToName(), fullRoute.getToX(), fullRoute.getToY()), fullRoute.getDistance());
         return route;
+    }
+
+    public String localizeDate(Locale locale, ZonedDateTime creationDate) {
+        Date date1 = Date.from(creationDate.toInstant());
+        DateFormat ffInstance = DateFormat.getDateTimeInstance(
+                DateFormat.FULL, DateFormat.MEDIUM, locale);
+
+        return  ffInstance.format(date1);
     }
 
 }
