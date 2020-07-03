@@ -36,7 +36,7 @@ public class DataBase {
 
 
     public DataBase (String port, String user, String password) {
-        DB_CONNECTION = "jdbc:postgresql://localhost:" + port + "/studs";
+        DB_CONNECTION = "jdbc:postgresql://localhost:" + port + "/khumachbayramova";
         DB_USER = user;
         DB_PASSWORD = password;
         this.connection = getDBConnection( );

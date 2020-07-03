@@ -120,7 +120,9 @@ public class LanguageEST extends ListResourceBundle {
             {"ownerF", "Omanik"},
             {"creationDateF", "Loomise kuupäev"},
             {"delete", "Kustuta"},
-            {"edit", "Redigeeri"}
+            {"edit", "Redigeeri"},
+            {"deleteCM", "Kustuta"},
+            {"editCM", "Redigeeri"}
 
     };
 }

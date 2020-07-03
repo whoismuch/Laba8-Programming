@@ -78,8 +78,8 @@
                            <contextMenu>
                               <ContextMenu fx:id="contextMenu">
                                 <items>
-                                  <MenuItem fx:id="editCM" mnemonicParsing="false" onAction="#onActionEditCM" text="Изменить" />
-                                    <MenuItem fx:id="deleteCM" mnemonicParsing="false" onAction="#onActionDeleteCM" text="Удалить" />
+                                  <MenuItem fx:id="edit" mnemonicParsing="false" onAction="#onActionEditCM" text="Изменить" />
+                                    <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#onActionDeleteCM" text="Удалить" />
                                 </items>
                               </ContextMenu>
                            </contextMenu>

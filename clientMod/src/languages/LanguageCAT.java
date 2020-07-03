@@ -119,7 +119,9 @@ public class LanguageCAT extends ListResourceBundle {
             {"ownerF", "Propietari"},
             {"creationDateF", "Data de creació"},
             {"delete", "Suprimeix"},
-            {"edit", "Edita"}
+            {"edit", "Edita"},
+            {"deleteCM", "Suprimeix"},
+            {"editCM", "Edita"}
 
 
 

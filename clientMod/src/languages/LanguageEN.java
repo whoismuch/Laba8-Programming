@@ -119,7 +119,9 @@ public class LanguageEN extends ListResourceBundle {
             {"ownerF", "Owner"},
             {"creationDateF", "Creation Date"},
             {"delete", "Delete"},
-            {"edit", "Edit"}
+            {"edit", "Edit"},
+            {"deleteCM", "Delete"},
+            {"editCM", "Edit"}
 
     };
 

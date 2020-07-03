@@ -126,7 +126,9 @@ public class LanguageRU extends ListResourceBundle {
             {"ownerF", "Владелец"},
             {"creationDateF", "Дата Создания"},
             {"delete", "Удалить"},
-            {"edit", "Редактировать"}
+            {"edit", "Изменить"},
+            {"deleteCM", "Удалить"},
+            {"editCM", "Изменить"}
 
 
     };
