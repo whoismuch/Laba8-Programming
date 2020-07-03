@@ -5,6 +5,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -55,7 +56,7 @@
                   </HBox>
                   <HBox fx:id="hbox" prefHeight="291.0" prefWidth="810.0">
                      <children>
-                        <TableView fx:id="table" prefHeight="287.0" prefWidth="1076.0">
+                        <TableView fx:id="table" onMouseClicked="#onTableClicked" prefHeight="287.0" prefWidth="1076.0">
                           <columns>
                             <TableColumn fx:id="id" prefWidth="30.0" text="id" />
                               <TableColumn fx:id="owner" prefWidth="70.0" text="Владелец" />
@@ -74,12 +75,21 @@
                            <HBox.margin>
                               <Insets left="30.0" right="15.0" />
                            </HBox.margin>
+                           <contextMenu>
+                              <ContextMenu fx:id="contextMenu">
+                                <items>
+                                  <MenuItem fx:id="editCM" mnemonicParsing="false" onAction="#onActionEditCM" text="Изменить" />
+                                    <MenuItem fx:id="deleteCM" mnemonicParsing="false" onAction="#onActionDeleteCM" text="Удалить" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
                         </TableView>
                      </children>
                   </HBox>
+                  <Label fx:id="tableEditionResult" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="939.0" textAlignment="CENTER" textFill="RED" />
                   <ButtonBar prefHeight="59.0" prefWidth="796.0">
                      <VBox.margin>
-                        <Insets right="20.0" top="8.0" />
+                        <Insets right="20.0" />
                      </VBox.margin>
                      <buttons>
                         <Button fx:id="Bsum_of_distance" mnemonicParsing="false" onAction="#onActionSumOfDistance" prefHeight="53.0" prefWidth="191.0" text="Сумма дальностей маршрутов" textAlignment="CENTER" wrapText="true" />

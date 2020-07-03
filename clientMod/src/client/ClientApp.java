@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -178,6 +179,23 @@ public class ClientApp extends Application {
 
         return loader;
 
+    }
+
+    public FXMLLoader showEnterEverything () throws IOException {
+        InputStream stream = getClass( ).getResourceAsStream("fxmls/EnterEverything.fxml");
+        FXMLLoader loader = new FXMLLoader( );
+        TextField textField = loader.load(stream);
+
+        EnterEverythingController eec = loader.getController();
+        eec.setEverything(clientProviding, mainWindowCollectionController, universalLocalizationModel, bundle);
+
+
+        Stage stage = new Stage( );
+        Scene scene = new Scene(textField);
+        stage.setScene(scene);
+        stage.show( );
+
+        return loader;
     }
 }
 

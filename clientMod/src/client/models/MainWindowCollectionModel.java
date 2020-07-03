@@ -1,6 +1,9 @@
 package client.models;
 
+import client.FullRoute;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import common.generatedClasses.Coordinates;
+import common.generatedClasses.Location;
 import common.generatedClasses.Route;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -90,6 +93,11 @@ public class MainWindowCollectionModel {
         clientProviding.clientWork();
         clientProviding.setArg(arg);
         return clientProviding.sendCommand("update_id").toString();
+    }
+
+    public Route convertRoute(FullRoute fullRoute) {
+        Route route = new Route(fullRoute.getName(), fullRoute.getId(), new Coordinates(fullRoute.getCoordinateX(), fullRoute.getCoordinateY()), fullRoute.getCreationDate(), new Location(fullRoute.getFromName(), fullRoute.getFromX(), fullRoute.getFromY()), new Location(fullRoute.getToName(), fullRoute.getToX(), fullRoute.getToY()), fullRoute.getDistance());
+        return route;
     }
 
 }

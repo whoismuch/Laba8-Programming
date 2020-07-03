@@ -6,7 +6,7 @@ import common.generatedClasses.Route;
 
 import java.time.ZonedDateTime;
 
-public class FullRoute {
+public class FullRoute{
 
     private String name; //Поле не может быть null, Строка не может быть пустой
     /**
