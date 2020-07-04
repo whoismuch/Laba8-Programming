@@ -79,7 +79,7 @@ public class UniversalLocalizationModel {
             translateResult = scanner.nextLine( );
             Set<String> keys = bundle.keySet( );
             for (String key : keys) {
-                if (translateResult.contains(key)) {
+                if (translateResult.contains(key) && !key.equals("date")) {
                     translateResult = translateResult.replaceAll(key, bundle.getString(key));
                 }
             }

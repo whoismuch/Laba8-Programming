@@ -1237,9 +1237,9 @@ public class MainWindowCollectionController {
             mapforXTo.put(id, xTo);
             mapforYTo.put(id, yTo);
 
-            gc.setFill(Color.PINK);
-            gc.fillOval(mapforXTo.put(id, xTo), mapforYTo.put(id, yTo) + 30, 5, 5);
-            gc.setFill(Color.BLACK);
+//            gc.setFill(Color.PINK);
+//            gc.fillOval(mapforXTo.put(id, xTo), mapforYTo.put(id, yTo) + 30, 5, 5);
+//            gc.setFill(Color.BLACK);
         }
     }
 
@@ -1258,9 +1258,9 @@ public class MainWindowCollectionController {
         mapforXToNow.put(id, xToNow);
         mapforYToNow.put(id, yToNow);
 
-        gc.setFill(Color.BLUE);
-        gc.fillOval(xToNow, yToNow + 60, 5, 5);
-        gc.setFill(Color.BLACK);
+//        gc.setFill(Color.BLUE);
+//        gc.fillOval(xToNow, yToNow + 60, 5, 5);
+//        gc.setFill(Color.BLACK);
     }
 
     private void getShrekXFrYFr (Long id, Group fromGroup) {
@@ -1278,9 +1278,9 @@ public class MainWindowCollectionController {
             mapforXFr.put(id, xFr);
             mapforYfr.put(id, yFr);
 
-            gc.setFill(Color.PINK);
-            gc.fillOval(mapforXFr.put(id, xFr), mapforYfr.put(id, yFr) + 30, 5, 5);
-            gc.setFill(Color.BLACK);
+//            gc.setFill(Color.PINK);
+//            gc.fillOval(mapforXFr.put(id, xFr), mapforYfr.put(id, yFr) + 30, 5, 5);
+//            gc.setFill(Color.BLACK);
         }
 
     }
@@ -1300,9 +1300,9 @@ public class MainWindowCollectionController {
         mapforXFrNow.put(id, xFrNow);
         mapforYFrNow.put(id, yFrNow);
 
-        gc.setFill(Color.BLUE);
-        gc.fillOval(xFrNow, yFrNow + 60, 5, 5);
-        gc.setFill(Color.BLACK);
+//        gc.setFill(Color.BLUE);
+//        gc.fillOval(xFrNow, yFrNow + 60, 5, 5);
+//        gc.setFill(Color.BLACK);
     }
 
     public void pleaseWork (Long id) {
