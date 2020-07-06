@@ -13,7 +13,7 @@ public class ConnectionModel {
         this.clientProviding = clientProviding;
     }
 
-    public String connect (String address, String port)  {
+    public String connect (String address, String port) throws IOException {
         try {
             if (address.contains(" ")) return "Ууууу, в адресе не должно быть пробелов";
             if (port.contains(" ")) return "Порт с пробелами, серьезно? Зачем?";
@@ -24,10 +24,6 @@ public class ConnectionModel {
             return "Такого адреса, к сожалению, не существует";
         } catch (NumberFormatException ex) {
             return "Порт должен быть циферкой";
-        } catch (ConnectException ex) {
-            return LanguageRU.serverIsNotAv;
-        } catch (IOException e) {
-            e.printStackTrace( );
         }
         return "Соединение установлено";
         }

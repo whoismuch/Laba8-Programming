@@ -27,7 +27,7 @@ public class DataBase {
 
     String checkUser = "SELECT * FROM USERS WHERE username = ?";
     String addUser = "INSERT INTO USERS (username, password) VALUES (?, ?)";
-    String addRoute = "INSERT INTO ROUTES (username, name, coordinate_X, coordinate_Y, creationDate, timeZone, from_X, from_Y, from_name, to_X, to_Y, to_name, distance) VALUES (?, ?, ?, ?, ?, ? ,?,?,?, ?, ?, ?, ?);";
+    String addRoute = "INSERT INTO ROUTES (username, name, coordinate_X, coordinate_Y, creationDate, timeZone, from_X, from_Y, from_name, to_X, to_Y, to_name, distance) VALUES (?, ?, ?, ?, ?, ? ,?,?,?, ?, ?, ?, ?) RETURNING id;";
     String addRouteWithId = "INSERT INTO ROUTES (username, id, name, coordinate_X, coordinate_Y, creationDate, timeZone, from_X, from_Y, from_name, to_X, to_Y, to_name, distance) VALUES (?, ?, ?, ?, ?, ?, ? ,?,?,?, ?, ?, ?, ?);";
     String load = "SELECT * FROM ROUTES";
     String deleteRoutes = "DELETE FROM ROUTES WHERE username = ?;";
@@ -135,7 +135,7 @@ public class DataBase {
         return hashtext;
     }
 
-    public boolean add (Route route, String username) {
+    public Long add (Route route, String username) {
         try {
             PreparedStatement ps = connection.prepareStatement(addRoute);
             ps.setString(1, username);
@@ -151,11 +151,17 @@ public class DataBase {
             ps.setLong(11, route.getTo( ).getY( ));
             ps.setString(12, route.getTo( ).getName( ));
             ps.setFloat(13, route.getDistance( ));
-            if (ps.executeUpdate( ) == 0) return false;
-            return true;
+
+//            if (ps.executeUpdate( ) == 0) {
+//                return -173L;
+//            }
+            ps.execute( );
+            ResultSet id = ps.getResultSet( );
+            id.next( );
+            return id.getLong(1);
         } catch (SQLException ex) {
             ex.printStackTrace( );
-            return false;
+            return -173L;
         }
     }
 
@@ -280,7 +286,7 @@ public class DataBase {
         }
     }
 
-    public void notifyClients() {
+    public void notifyClients ( ) {
 
     }
 

@@ -55,20 +55,26 @@ public class AuthenticationController {
 
             nextStep(result);
         } catch (IOException ex) {
-            System.out.println(1);
+            clientProviding.setResetConnection(true);
+            System.out.println("contr" + clientProviding.isResetConnection());
             authenticationResult.setText(bundle.getString(LanguageRU.serverIsNotAv));
         }
 
     }
 
     @FXML
-    public void onActionSignUp (ActionEvent actionEvent) throws IOException, InterruptedException {
-        authenticationResult.setWrapText(true);
-        result = authenticationModel.registration(username.getText( ), password.getText( ));
-        authenticationResult.setText(bundle.getString(result));
+    public void onActionSignUp (ActionEvent actionEvent)  throws InterruptedException {
+        try {
+            authenticationResult.setWrapText(true);
+            result = authenticationModel.registration(username.getText( ), password.getText( ));
+            authenticationResult.setText(bundle.getString(result));
 
 
-        nextStep(result);
+            nextStep(result);
+        } catch (IOException ex ) {
+            clientProviding.setResetConnection(true);
+            authenticationResult.setText(bundle.getString(LanguageRU.serverIsNotAv));
+        }
     }
 
     @FXML
@@ -104,7 +110,7 @@ public class AuthenticationController {
         universalLocalizationModel.updateLabels(authenticationResult, result, bundle);
     }
 
-    public void nextStep (String result) throws IOException, InterruptedException {
+    public void nextStep (String result) {
         new Thread(( ) -> {
             if (bundle.getString(result).equals(bundle.getString("Вы успешно зарегистрировались")) || bundle.getString(result).equals(bundle.getString("Вы успешно авторизовались"))) {
                 try {

@@ -192,8 +192,7 @@ public class MainWindowCollectionController {
     private HashMap<Long, Double> mapforXTo;
     private HashMap<Long, Double> mapforYTo;
     private HashMap<Long, Route> r;
-
-
+    private Group group;
 
 
     @FXML
@@ -1040,13 +1039,13 @@ public class MainWindowCollectionController {
         HashMap<String, Color> colors = getColors(routes);
         if (gc != null) gc.clearRect(0, 0, canvas.getWidth( ), canvas.getHeight( ));
 
-        scale = 0L;
-        for (Route route : routes) {
-            if (Math.abs(route.getFrom( ).getX( )) > scale) scale = Math.abs(route.getFrom( ).getX( ));
-            if (Math.abs(route.getFrom( ).getY( )) > scale) scale = Math.abs(route.getFrom( ).getY( ));
-            if (Math.abs(route.getTo( ).getX( )) > scale) scale = Math.abs(route.getTo( ).getX( ));
-            if (Math.abs(route.getTo( ).getY( )) > scale) scale = Math.abs(route.getTo( ).getY( ));
-        }
+        scale = 2000L;
+//        for (Route route : routes) {
+//            if (Math.abs(route.getFrom( ).getX( )) > scale) scale = Math.abs(route.getFrom( ).getX( ));
+//            if (Math.abs(route.getFrom( ).getY( )) > scale) scale = Math.abs(route.getFrom( ).getY( ));
+//            if (Math.abs(route.getTo( ).getX( )) > scale) scale = Math.abs(route.getTo( ).getX( ));
+//            if (Math.abs(route.getTo( ).getY( )) > scale) scale = Math.abs(route.getTo( ).getY( ));
+//        }
 
         gc = canvas.getGraphicsContext2D( );
         gran = 125;
@@ -1061,7 +1060,17 @@ public class MainWindowCollectionController {
         gc.fillOval(canvas.getWidth( ) / 2.0 - 2.5, canvas.getHeight( ) / 2.0 + gran - 2, 5, 5);
         gc.fillOval(canvas.getWidth( ) / 2.0 - 2.5, canvas.getHeight( ) / 2.0 - gran - 7, 5, 5);
 
-        Group group = (Group) canvas.getParent( );
+        group = (Group) canvas.getParent( );
+
+
+        for (Map.Entry<Long, Route> pair : r.entrySet( )) {
+            Long id = pair.getKey();
+            int p = 0;
+            for (Route route : routes) {
+                if (!route.getId().equals(id)) p++;
+            }
+            if (p == routes.size()) deleteMetki(id);
+        }
 
 
         for (Route route : routes) {
@@ -1220,6 +1229,15 @@ public class MainWindowCollectionController {
             }
         }
 
+    }
+
+    private void deleteMetki ( Long id) {
+        Group metka1 = pictureFrom.get(id);
+        Group metka2 = pictureTo.get(id);
+        Platform.runLater( () -> {
+            group.getChildren( ).remove(metka1);
+            group.getChildren( ).remove(metka2);
+        });
     }
 
     private void getFionaXToYTo (Long id, Group toGroup) {

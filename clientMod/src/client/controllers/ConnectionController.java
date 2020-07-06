@@ -61,6 +61,8 @@ public class ConnectionController {
 
             nextStep(result);
         } catch (IOException ex) {
+            clientProviding.setResetConnection(true);
+            System.out.println("contr " + clientProviding.isResetConnection());
             connectionResult.setText(bundle.getString(LanguageRU.serverIsNotAv));
         }
     }

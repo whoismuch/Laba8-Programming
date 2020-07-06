@@ -18,7 +18,7 @@ public class ClientNotifying implements Runnable {
     private DataExchangeWithServer dataExchangeWithServer;
     private String address;
     private String port;
-    private MainWindowCollectionController mainWindowCollectionController;
+    private volatile MainWindowCollectionController mainWindowCollectionController;
     private SocketChannel notifyingChannel;
     private Selector selector;
     private ClientProviding clientProviding;
@@ -41,11 +41,14 @@ public class ClientNotifying implements Runnable {
             selector = Selector.open( );
             notifyingChannel.configureBlocking(false);
             notifyingChannel.register(selector, SelectionKey.OP_READ);
+            LinkedHashSet<Route> routes = new LinkedHashSet<>();
             while (true) {
+
                 selector.select( );
                 Object object = dataExchangeWithServer.getFromServer( );
-                LinkedHashSet<Route> routes = (LinkedHashSet<Route>) object;
+                routes = (LinkedHashSet<Route>) object;
                 clientProviding.setRoutes(routes);
+
                 if (mainWindowCollectionController != null) {
                     mainWindowCollectionController.setColumns(routes);
                 }

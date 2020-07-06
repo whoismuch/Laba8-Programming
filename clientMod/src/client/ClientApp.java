@@ -5,6 +5,8 @@ import client.models.ClientProviding;
 import client.models.UniversalLocalizationModel;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
@@ -12,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -59,6 +62,15 @@ public class ClientApp extends Application {
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+
         primaryStage.show( );
 
         primaryStage.show( );
@@ -79,6 +91,16 @@ public class ClientApp extends Application {
         loader.setController(ac);
 
         Stage stage = new Stage( );
+
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+
         stage.setTitle("RouteApp");
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
@@ -104,6 +126,14 @@ public class ClientApp extends Application {
         stage.setTitle("RouteApp");
         Scene scene = new Scene(tabPane);
         stage.setScene(scene);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                                    @Override
+                                    public void handle(WindowEvent event) {
+                                        Platform.exit();
+                                        System.exit(0);
+                                    }
+                                });
+
         stage.show( );
     }
 

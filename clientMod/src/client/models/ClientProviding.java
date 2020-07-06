@@ -71,39 +71,53 @@ public class ClientProviding {
         return clientNotifying;
     }
 
+    private volatile boolean resetConnection = true;
+
+    public boolean isResetConnection ( ) {
+        return resetConnection;
+    }
+
+    public void setResetConnection (boolean resetConnection) {
+        this.resetConnection = resetConnection;
+    }
+
     /**
      * Устанавливает активное соединение с сервером.
      */
-    public void clientWork ( ) throws IOException, ConnectException{
-            SocketChannel notifyingChannel = SocketChannel.open( );
-            SocketChannel outcomingchannel = SocketChannel.open( );
-            SocketAddress outcoming = new InetSocketAddress((address), Integer.parseInt(port));
+    public void clientWork ( ) throws IOException, ConnectException {
+        SocketChannel notifyingChannel = SocketChannel.open( );
+        SocketChannel outcomingchannel = SocketChannel.open( );
+        SocketAddress outcoming = new InetSocketAddress((address), Integer.parseInt(port));
 
-            outcomingchannel.connect(outcoming);
-            notifyingChannel.connect(outcoming);
+        outcomingchannel.connect(outcoming);
+        notifyingChannel.connect(outcoming);
 
 
-            this.outcomingchannel = outcomingchannel;
-            this.outcoming = outcoming;
+        this.outcomingchannel = outcomingchannel;
+        this.outcoming = outcoming;
 
-            dataExchangeWithServer = new DataExchangeWithServer(outcomingchannel);
-            DataExchangeWithServer notifyFromServer = new DataExchangeWithServer(notifyingChannel);
+        dataExchangeWithServer = new DataExchangeWithServer(outcomingchannel);
+        DataExchangeWithServer notifyFromServer = new DataExchangeWithServer(notifyingChannel);
 
-            if (a == 0) {
-                clientNotifying = new ClientNotifying(notifyingChannel, notifyFromServer, mainController, this);
-                new Thread(clientNotifying).start( );
-                a = 1;
-            }
+
+        if (a == 0) {
+            resetConnection = false;
+            a = 1;
+            clientNotifying = new ClientNotifying(notifyingChannel, notifyFromServer, mainController, this);
+            new Thread(clientNotifying).start( );
+        }
+
+        if (mainController!=null) clientNotifying.setMainWindowCollectionController(mainController);
 //            ClientNotifying clientNotifying = new ClientNotifying(notifyingChannel, notifyFromServer, mainController, this);
 //            executorService = Executors.newSingleThreadExecutor( );
 //            executorService.submit(clientNotifying);
 
-            selector = Selector.open( );
-            outcomingchannel.configureBlocking(false);
-            outcomingchannel.register(selector, SelectionKey.OP_READ);
+        selector = Selector.open( );
+        outcomingchannel.configureBlocking(false);
+        outcomingchannel.register(selector, SelectionKey.OP_READ);
 
-            selector.select( );
-            userManager.setAvailable((HashMap) dataExchangeWithServer.getFromServer( ));
+        selector.select( );
+        userManager.setAvailable((HashMap) dataExchangeWithServer.getFromServer( ));
 
     }
 
@@ -122,7 +136,7 @@ public class ClientProviding {
         try {
             CommandDescription command;
             if (userManager.checkElement(commandname)) {
-                route = userManager.getRoute();
+                route = userManager.getRoute( );
                 route.setUsername(username);
                 command = new CommandDescription(commandname, arg, route, username, password, choice);
             } else {
@@ -131,7 +145,7 @@ public class ClientProviding {
 
 
             dataExchangeWithServer.sendToServer(command);
-            return getResult();
+            return getResult( );
         } catch (IOException ex) {
             clientWork( );
         }
@@ -211,7 +225,7 @@ public class ClientProviding {
             CommandDescription command = new CommandDescription(null, null, null, username, password, choice);
             dataExchangeWithServer.sendToServer(command);
 
-            return getResult();
+            return getResult( );
         } catch (IOException ex) {
             clientWork( );
         }

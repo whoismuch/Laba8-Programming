@@ -14,22 +14,15 @@ public class AuthenticationModel {
     }
 
     public String authorization(String username, String password) throws IOException {
-        try {
             clientProviding.clientWork( );
             String result = clientProviding.authorization(username, password).toString( );
             return result;
-        } catch (ConnectException ex) {
-            return (LanguageRU.serverIsNotAv);
-        }
     }
 
     public String registration(String username, String password) throws IOException {
-        try {
             clientProviding.clientWork( );
             String result = clientProviding.registration(username, password).toString( );
             return result;
-        } catch (ConnectException ex) {
-            return (LanguageRU.serverIsNotAv);
-        }
+
     }
 }

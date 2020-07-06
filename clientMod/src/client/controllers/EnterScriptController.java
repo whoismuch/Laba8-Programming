@@ -1,19 +1,30 @@
 package client.controllers;
 
+import client.FullRoute;
 import client.models.ClientProviding;
 import client.models.UniversalLocalizationModel;
 import common.exceptions.NoPermissionsException;
+import common.generatedClasses.Route;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EnterScriptController {
@@ -33,12 +44,26 @@ public class EnterScriptController {
     @FXML
     private TextArea commandResultES;
 
+    @FXML
+    private Button chooseFile;
+
     private ResourceBundle bundle;
 
     private String result;
 
     private String scriptResult;
 
+    @FXML
+    private void initialize ( ) throws IOException {
+        chooseFile.setOnAction( e -> {
+            FileChooser fc = new FileChooser();
+            fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TEXT files (*.txt)", "*.txt"));
+
+            File file = fc.showOpenDialog((Stage) chooseFile.getScene().getWindow());
+            nameScript.setText(file.getAbsolutePath());
+        });
+
+    }
     public Button getDone ( ) {
         return doneED;
     }

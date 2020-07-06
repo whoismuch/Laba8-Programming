@@ -64,10 +64,12 @@ public class Navigator implements ICollectionManager {
     public void add (Route route, String username) {
         lock.writeLock( ).lock( );
         try {
-            if (db.add(route, username)) {
-                routeBook.add(route);
+            Long id = db.add(route, username);
+            if (!id.equals(-173L)) {
+                routeBook.add(id, route);
                 serverApp.notifyClients(routeBook.getCollection());
             }
+
         } finally {
             lock.writeLock( ).unlock( );
         }

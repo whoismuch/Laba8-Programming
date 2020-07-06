@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AuthenticationController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AuthenticationController">
    <center>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
           <children>
@@ -35,7 +35,7 @@
                       <Insets left="50.0" right="50.0" />
                   </VBox.margin>
               </Label>
-              <TextField fx:id="username" alignment="CENTER" prefHeight="43.0" prefWidth="500.0" />
+              <TextField fx:id="username" prefHeight="43.0" prefWidth="500.0" />
               <Label fx:id="pass" alignment="CENTER" contentDisplay="CENTER" prefHeight="62.0" prefWidth="505.0" text="Пароль">
                   <font>
                       <Font size="24.0" />
@@ -44,7 +44,7 @@
                       <Insets left="50.0" right="50.0" />
                   </VBox.margin>
               </Label>
-            <PasswordField fx:id="password" alignment="CENTER" prefHeight="44.0" prefWidth="516.0" />
+            <PasswordField fx:id="password" prefHeight="44.0" prefWidth="516.0" />
               <Label fx:id="authenticationResult" alignment="CENTER" prefHeight="72.0" prefWidth="427.0" textAlignment="CENTER" textFill="RED" wrapText="true">
                   <font>
                       <Font size="14.0" />
@@ -53,7 +53,7 @@
                       <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                   </padding>
               </Label>
-            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="419.0">
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
                <children>
                   <Button fx:id="signUp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onActionSignUp" prefHeight="50.0" prefWidth="300.0" text="Зарегистрироваться">
                      <padding>

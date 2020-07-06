@@ -56,7 +56,7 @@ public class AnimationMove {
 
 
         pathTransition = new PathTransition( );
-        pathTransition.setDuration(Duration.millis(3000));
+        pathTransition.setDuration(Duration.millis(5000));
         pathTransition.setNode(group);
         pathTransition.setPath(path);
     }
